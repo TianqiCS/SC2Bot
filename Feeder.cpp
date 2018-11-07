@@ -74,10 +74,18 @@ void Feeder::OnUnitEnterVision(const sc2::Unit *unit) {
 }
 
 void Feeder::OnBuildingConstructionComplete(const sc2::Unit* unit) {
-
+	switch (unit->unit_type.ToType()) {
+	case UNIT_TYPEID::TERRAN_BARRACKS: {
+		// set rally point
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void Feeder::OnUnitCreated(const sc2::Unit *unit) {
+	
 }
 
 void Feeder::OnUnitIdle(const sc2::Unit *unit) {
@@ -385,8 +393,6 @@ bool Feeder::BuildRefinery() {
 	return false;
 }
 
-
-
 bool Feeder::TryBuildSCV() {
 	const ObservationInterface* observation = Observation();
 	Units bases = observation->GetUnits(Unit::Alliance::Self, IsTownHall());
@@ -431,10 +437,8 @@ bool Feeder::TryBuildMarine() {
 }
 
 bool Feeder::TryBuildMarauder() {
-	return TryBuildUnit(ABILITY_ID::TRAIN_MARINE, UNIT_TYPEID::TERRAN_BARRACKS);
+	return TryBuildUnit(ABILITY_ID::TRAIN_MARAUDER, UNIT_TYPEID::TERRAN_BARRACKS);
 }
-
-
 
 void Feeder::ScoutWithSCV() {
 
