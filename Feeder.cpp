@@ -51,6 +51,7 @@ void Feeder::OnStep() {
 	TryBuildSCV();
 	BuildStructures();
 	BuildArmy();
+	ScoutWithMarines();
 	
 }
 
@@ -268,13 +269,13 @@ bool Feeder::TryBuildSupplyDepot() {
 	const ObservationInterface* observation = Observation();
 
 	// If we are not supply capped, don't build a supply depot.
-	if (observation->GetFoodUsed() < observation->GetFoodCap() - 6) {
+	if (observation->GetFoodUsed() < observation->GetFoodCap() - 3) {
 		return false;
 	}
 
-	if (observation->GetMinerals() < 100) {
-		return false;
-	}
+	//if (observation->GetMinerals() < 100) {
+	//	return false;
+	//}
 
 	//check to see if there is already on building
 	Units units = observation->GetUnits(Unit::Alliance::Self, IsUnits(supply_depot_types));
@@ -466,4 +467,38 @@ bool Feeder::TryBuildExpansionCom() {
 		return TryExpand(ABILITY_ID::BUILD_COMMANDCENTER, UNIT_TYPEID::TERRAN_SCV);
 	}
 	return false;
+}
+
+void Feeder::ScoutWithMarines() {
+
+	Units units = Observation()->GetUnits(Unit::Alliance::Self);
+	// count the number of Marines
+	size_t num_Marines = 0;
+	for (const auto& unit : units) {
+		UnitTypeID unit_type(unit->unit_type);
+		if (unit_type == UNIT_TYPEID::TERRAN_MARINE)
+			++num_Marines;
+	}
+	if (num_Marines < 20) { return; }
+	for (const auto& unit : units) {
+		UnitTypeID unit_type(unit->unit_type);
+		if (unit_type != UNIT_TYPEID::TERRAN_MARINE)
+			continue;
+
+		if (!unit->orders.empty())
+			continue;
+
+		// Priority to attacking enemy structures.
+		const Unit* enemy_unit = nullptr;
+		if (FindEnemyStructure(Observation(), enemy_unit)) {
+			Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, enemy_unit);
+			return;
+		}
+
+		Point2D target_pos;
+		// TODO: For efficiency, these queries should be batched.
+		if (FindEnemyPosition(target_pos)) {
+			Actions()->UnitCommand(unit, ABILITY_ID::SMART, target_pos);
+		}
+	}
 }

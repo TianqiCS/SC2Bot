@@ -19,6 +19,9 @@ public:
     virtual void OnUnitCreated(const sc2::Unit *unit) override;
     virtual void OnUnitEnterVision(const sc2::Unit *unit) override;
 	virtual void OnBuildingConstructionComplete(const sc2::Unit *unit) override;
+	
+	// scout function
+	void ScoutWithMarines();
 
 	void Observate();
 	void BuildStructures();
