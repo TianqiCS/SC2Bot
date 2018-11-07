@@ -6,6 +6,17 @@
 
 using namespace sc2;
 
+struct IsAttackable {
+	bool operator()(const Unit& unit) {
+		switch (unit.unit_type.ToType()) {
+		case UNIT_TYPEID::ZERG_OVERLORD: return false;
+		case UNIT_TYPEID::ZERG_OVERSEER: return false;
+		case UNIT_TYPEID::PROTOSS_OBSERVER: return false;
+		default: return true;
+		}
+	}
+};
+
 struct IsTownHall {
 	bool operator()(const Unit& unit) {
 		switch (unit.unit_type.ToType()) {
@@ -471,8 +482,9 @@ bool Feeder::TryBuildExpansionCom() {
 
 // walk
 void Feeder::ScoutWithMarines() {
-
+	const ObservationInterface* observation = Observation();
 	Units units = Observation()->GetUnits(Unit::Alliance::Self);
+	Units enemy_units = observation->GetUnits(Unit::Alliance::Enemy, IsAttackable());
 	// count the number of Marines
 	size_t num_Marines = 0;
 	for (const auto& unit : units) {
@@ -490,16 +502,21 @@ void Feeder::ScoutWithMarines() {
 			continue;
 
 		// Priority to attacking enemy structures.
-		const Unit* enemy_unit = nullptr;
-		if (FindEnemyStructure(Observation(), enemy_unit)) {
-			Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, enemy_unit);
-			return;
-		}
-
 		Point2D target_pos;
-		// TODO: For efficiency, these queries should be batched.
 		if (FindEnemyPosition(target_pos)) {
+			if (Distance2D(unit->pos, target_pos) < 20 && enemy_units.empty()) {
+				if (TryFindRandomPathableLocation(unit, target_pos)) {
+					Actions()->UnitCommand(unit, ABILITY_ID::SMART, target_pos);
+					return;
+				}
+			}
+			else if (!enemy_units.empty())
+			{
+				Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, enemy_units.front());
+				return;
+			}
 			Actions()->UnitCommand(unit, ABILITY_ID::SMART, target_pos);
 		}
 	}
 }
+
