@@ -411,6 +411,7 @@ bool Feeder::TryBuildSCV() {
 		}
 	}
 	//return TryBuildUnit(ABILITY_ID::TRAIN_SCV, UNIT_TYPEID::TERRAN_COMMANDCENTER);
+	return false;
 }
 
 bool Feeder::TryBuildMarine() {
