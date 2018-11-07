@@ -313,7 +313,7 @@ bool Feeder::TryBuildTrainingFacilities()
 	barracks_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size();
 	factory_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size();
 
-	if (barracks_num < 2) {
+	if (barracks_num < 4) {
 		TryBuildStructure(ABILITY_ID::BUILD_BARRACKS, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
 	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
