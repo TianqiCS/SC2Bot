@@ -1,4 +1,11 @@
-This is the bot Feeder!
+#Bot Feeder -- A StarCraft II bot
+
+Feeder is a single faction (Terran) bot.
+
+Reference and dependency:
+SC2API - 
+Framework - 
+
 
 This build was not finished yet!
 TODO:
