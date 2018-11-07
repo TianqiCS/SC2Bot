@@ -48,6 +48,7 @@ Feeder::Feeder() {
 
 void Feeder::OnStep() {
 	Observate();
+	TryBuildSCV();
 	BuildStructures();
 	BuildArmy();
 	
@@ -375,10 +376,41 @@ bool Feeder::BuildRefinery() {
 
 
 bool Feeder::TryBuildSCV() {
-	if (CountUnitType(Observation(), UNIT_TYPEID::TERRAN_SCV) >= 20)
-		return false;
+	const ObservationInterface* observation = Observation();
+	Units bases = observation->GetUnits(Unit::Alliance::Self, IsTownHall());
 
-	return TryBuildUnit(ABILITY_ID::TRAIN_SCV, UNIT_TYPEID::TERRAN_COMMANDCENTER);
+	for (const auto& base : bases) {
+		if (base->unit_type == UNIT_TYPEID::TERRAN_ORBITALCOMMAND && base->energy > 50) {
+			if (FindNearestMineralPatch(base->pos)) {
+				Actions()->UnitCommand(base, ABILITY_ID::EFFECT_CALLDOWNMULE);
+			}
+		}
+	}
+
+	if (observation->GetFoodWorkers() >= max_worker_count_) {
+		return false;
+	}
+
+	if (observation->GetFoodUsed() >= observation->GetFoodCap()) {
+		return false;
+	}
+
+	if (observation->GetFoodWorkers() > GetExpectedWorkers(UNIT_TYPEID::TERRAN_REFINERY)) {
+		return false;
+	}
+
+	//if (CountUnitType(Observation(), UNIT_TYPEID::TERRAN_SCV) >= 20)
+	//	return false;
+
+	for (const auto& base : bases) {
+		//if there is a base with less than ideal workers
+		if (base->assigned_harvesters < base->ideal_harvesters && base->build_progress == 1) {
+			if (observation->GetMinerals() >= 50) {
+				return TryBuildUnit(ABILITY_ID::TRAIN_SCV, base->unit_type);
+			}
+		}
+	}
+	//return TryBuildUnit(ABILITY_ID::TRAIN_SCV, UNIT_TYPEID::TERRAN_COMMANDCENTER);
 }
 
 bool Feeder::TryBuildMarine() {
