@@ -173,7 +173,7 @@ void Feeder::BuildArmy() {
 	Units starports_tech = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_STARPORTTECHLAB));
 
 	Units supply_depots = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_SUPPLYDEPOT));
-	if (bases.size() < 3 && observation->GetMinerals() > 1000) {
+	if (bases.size() < 2 && observation->GetMinerals() > 1000) {
 		TryBuildExpansionCom();
 		return;
 	}
@@ -202,8 +202,9 @@ void Feeder::BuildArmy() {
 				TryBuildAddOn(ABILITY_ID::BUILD_REACTOR_BARRACKS, barrack->tag);
 			}
 		}
-		TryBuildMarine();
 		TryBuildMarauder();
+		TryBuildMarine();
+		
 	}
 
 	for (const auto& factory : factorys) {
