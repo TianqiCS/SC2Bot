@@ -44,6 +44,7 @@ public:
 
 	// utilitys
 	void GetAllEnemyBaseLocation(std::vector<Point2D> &rtv);
+	void GetNeareastBaseLocation(Point2D &point);
 
 private:
 	// different typenames of one type unit

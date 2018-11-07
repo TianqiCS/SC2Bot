@@ -82,7 +82,24 @@ void Feeder::OnUnitDestroyed(const sc2::Unit *unit) {
 
 }
 void Feeder::OnUnitEnterVision(const sc2::Unit *unit) {
-
+	if (scv_scouting) {
+		switch (unit->unit_type.ToType())
+		{
+		case UNIT_TYPEID::TERRAN_SCV: {
+			break;
+		}
+		case UNIT_TYPEID::PROTOSS_PROBE: {
+			break;
+		}
+		case UNIT_TYPEID::ZERG_DRONE: {
+			break;
+		}
+		default:
+			GetNeareastBaseLocation(Point2D(unit->pos.x, unit->pos.y));
+			scv_scouting = false;
+			break;
+		}
+	}
 }
 
 void Feeder::OnBuildingConstructionComplete(const sc2::Unit* unit) {
@@ -464,38 +481,30 @@ void Feeder::ScoutWithSCV() {
 		return;
 	}
 	
-	std::cout << Observation()->GetGameInfo().height << Observation()->GetGameInfo().width << std::endl;
-	std::cout << " scout " << std::endl;
+	// get one scv to scout
 	for (auto unit : units){
 		UnitTypeID unit_type(units.front()->unit_type);
 		
 		if (unit_type != UNIT_TYPEID::TERRAN_SCV)
 			continue;
 
-//		if (!unit->orders.empty())
-//			continue;
-
-		// Priority to attacking enemy structures.
 		Point2D target_pos;
 		std::vector<Point2D> start_loactions;
 
 		GetAllEnemyBaseLocation(start_loactions);
 
-		std::cout << start_loactions.front().x << std::endl;
 		// for each possible enemy base location
 		for (Point2D &point : start_loactions) {
-			Actions()->UnitCommand(unit, ABILITY_ID::MOVE, point, true);
+			Actions()->UnitCommand(unit, ABILITY_ID::MOVE, point, true); // queue orders
 		}
 
 		break;
 	}
 
-	scv_scouting = false;
+	scv_scouting = true;
 
-	
-
-	
 }
+
 void Feeder::GetAllEnemyBaseLocation(std::vector<Point2D> &rtv) {
 	const ObservationInterface* observation = Observation();
 
@@ -614,5 +623,25 @@ void Feeder::AttackWithAllUnits() {
 	target_pos = game_info_.enemy_start_locations.front();
 	return true;
 	*/
+}
+
+void Feeder::GetNeareastBaseLocation(Point2D &point) {
+	std::vector<Point2D> locations;
+	float min_distance;
+	Point2D min_point;
+
+	GetAllEnemyBaseLocation(locations);
+	min_point = locations.front();
+	min_distance = Distance2D(point, min_point);
+	for (const Point2D &loca : locations) {
+		float temp = Distance2D(loca, loca);
+
+		if (temp < min_distance) {
+			min_distance = temp;
+			min_point = loca;
+		}
+	}
+
+	enemy_base_point = min_point;
 }
 
