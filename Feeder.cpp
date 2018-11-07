@@ -45,7 +45,7 @@ Feeder::Feeder() {
 }
 
 //void Feeder::OnGameStart(){}
-
+// this is comment
 void Feeder::OnStep() {
 	Observate();
 	TryBuildSCV();
@@ -469,6 +469,7 @@ bool Feeder::TryBuildExpansionCom() {
 	return false;
 }
 
+// walk
 void Feeder::ScoutWithMarines() {
 
 	Units units = Observation()->GetUnits(Unit::Alliance::Self);
