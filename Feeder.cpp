@@ -469,6 +469,8 @@ bool Feeder::TryBuildMarauder() {
 	return TryBuildUnit(ABILITY_ID::TRAIN_MARAUDER, UNIT_TYPEID::TERRAN_BARRACKS);
 }
 
+// TODO KNOWN BUG: in some cases, scv would not be sent to scout, 
+// probable cause: conflit between Scouting method and (BuildStructure || onIdle)
 void Feeder::ScoutWithSCV() {
 	const ObservationInterface* observation = Observation();
 
@@ -482,7 +484,7 @@ void Feeder::ScoutWithSCV() {
 	}
 	
 	// get one scv to scout
-	for (auto unit : units){
+ 	for (auto unit : units){
 		UnitTypeID unit_type(units.front()->unit_type);
 		
 		if (unit_type != UNIT_TYPEID::TERRAN_SCV)
@@ -515,11 +517,12 @@ void Feeder::GetAllEnemyBaseLocation(std::vector<Point2D> &rtv) {
 	my_start_pos.x = temp_pos.x;
 	my_start_pos.y = temp_pos.y;
 	game_info = observation->GetGameInfo();
+	min_p = game_info.playable_min;
 	max_p = game_info.playable_max;
 
-	rtv.push_back(Point2D(my_start_pos.x, max_p.y - my_start_pos.y));
-	rtv.push_back(Point2D(max_p.x - my_start_pos.x, my_start_pos.y));
-	rtv.push_back(Point2D(max_p.x - my_start_pos.x, max_p.y - my_start_pos.y));
+	rtv.push_back(Point2D(my_start_pos.x, max_p.y - my_start_pos.y + min_p.y));
+	rtv.push_back(Point2D(max_p.x - my_start_pos.x + min_p.x, max_p.y - my_start_pos.y + min_p.y));
+	rtv.push_back(Point2D(max_p.x - my_start_pos.x + min_p.x, my_start_pos.y));
 	rtv.push_back(Point2D(my_start_pos.x, my_start_pos.y));
 
 }
