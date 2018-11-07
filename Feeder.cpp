@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 #include "Feeder.h"
 #include "sc2api/sc2_api.h"
@@ -53,6 +54,11 @@ struct IsStructure {
 
 Feeder::Feeder() {
 	PrintStatus("Feeder has been initialized..");
+
+	enemy_base_point.x = 0.0f;
+	enemy_base_point.y = 0.0f;
+
+	scv_scouting = false;
 }
 
 //void Feeder::OnGameStart(){}
@@ -62,7 +68,13 @@ void Feeder::OnStep() {
 	TryBuildSCV();
 	BuildStructures();
 	BuildArmy();
-	ScoutWithMarines();
+	if (enemy_base_point.x == 0.0f && enemy_base_point.y == 0.0f) { // not found enemy base
+		ScoutWithSCV();
+	}
+	else { // found enemy base
+		ScoutWithMarines();
+		//AttackWithAllUnits();
+	}
 	
 }
 
@@ -441,10 +453,22 @@ bool Feeder::TryBuildMarauder() {
 }
 
 void Feeder::ScoutWithSCV() {
+	const ObservationInterface* observation = Observation();
 
 	Units units = Observation()->GetUnits(Unit::Alliance::Self);
-	for (const auto& unit : units) {
-		UnitTypeID unit_type(unit->unit_type);
+
+	if (!scv_scouting) {
+		scv_scouting = true;
+	}
+	else {
+		return;
+	}
+	
+	std::cout << Observation()->GetGameInfo().height << Observation()->GetGameInfo().width << std::endl;
+	std::cout << " scout " << std::endl;
+	for (auto unit : units){
+		UnitTypeID unit_type(units.front()->unit_type);
+		
 		if (unit_type != UNIT_TYPEID::TERRAN_SCV)
 			continue;
 
@@ -452,18 +476,43 @@ void Feeder::ScoutWithSCV() {
 //			continue;
 
 		// Priority to attacking enemy structures.
-		const Unit* enemy_unit = nullptr;
-		if (FindEnemyStructure(Observation(), enemy_unit)) {
-			Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, enemy_unit);
-			return;
+		Point2D target_pos;
+		std::vector<Point2D> start_loactions;
+
+		GetAllEnemyBaseLocation(start_loactions);
+
+		std::cout << start_loactions.front().x << std::endl;
+		// for each possible enemy base location
+		for (Point2D &point : start_loactions) {
+			Actions()->UnitCommand(unit, ABILITY_ID::MOVE, point, true);
 		}
 
-		Point2D target_pos;
-		// TODO: For efficiency, these queries should be batched.
-		if (FindEnemyPosition(target_pos)) {
-			Actions()->UnitCommand(unit, ABILITY_ID::SMART, target_pos);
-		}
+		break;
 	}
+
+	scv_scouting = false;
+
+	
+
+	
+}
+void Feeder::GetAllEnemyBaseLocation(std::vector<Point2D> &rtv) {
+	const ObservationInterface* observation = Observation();
+
+	Point2D my_start_pos, min_p, max_p;
+	Point3D temp_pos = observation->GetStartLocation();
+	GameInfo game_info;
+
+	my_start_pos.x = temp_pos.x;
+	my_start_pos.y = temp_pos.y;
+	game_info = observation->GetGameInfo();
+	max_p = game_info.playable_max;
+
+	rtv.push_back(Point2D(my_start_pos.x, max_p.y - my_start_pos.y));
+	rtv.push_back(Point2D(max_p.x - my_start_pos.x, my_start_pos.y));
+	rtv.push_back(Point2D(max_p.x - my_start_pos.x, max_p.y - my_start_pos.y));
+	rtv.push_back(Point2D(my_start_pos.x, my_start_pos.y));
+
 }
 
 bool Feeder::TryBuildExpansionCom() {
@@ -506,6 +555,28 @@ void Feeder::ScoutWithMarines() {
 			continue;
 
 		// Priority to attacking enemy structures.
+		/*
+		Point2D target_pos;
+		float neareast_possible_enemy_base = -1.0f;
+		if (FindEnemyPosition(target_pos)) {
+			// update enemy_base_location
+			if (game_info_.enemy_start_locations.empty()) {
+				return;
+			}
+
+			for (Point2D &start_point : game_info_.enemy_start_locations) {
+				float temp = Distance2D(target_pos, start_point);
+
+				if ((temp < neareast_possible_enemy_base) || (neareast_possible_enemy_base < 0)) {
+					neareast_possible_enemy_base = temp;
+					enemy_base_point = start_point;
+				}
+			}
+
+		}
+		*/
+		
+		
 		Point2D target_pos;
 		if (FindEnemyPosition(target_pos)) {
 			if (Distance2D(unit->pos, target_pos) < 20 && enemy_units.empty()) {
@@ -521,6 +592,27 @@ void Feeder::ScoutWithMarines() {
 			}
 			Actions()->UnitCommand(unit, ABILITY_ID::SMART, target_pos);
 		}
+		
 	}
+}
+
+// pre-conditon: enemy-location is found
+void Feeder::AttackWithAllUnits() {
+	const ObservationInterface* observation = Observation();
+	Units units = Observation()->GetUnits(Unit::Alliance::Self);
+
+	Units enemy_units = observation->GetUnits(Unit::Alliance::Enemy);
+	if (enemy_units.empty()) {
+		return;
+	}
+
+	Actions()->UnitCommand(units, ABILITY_ID::ATTACK, enemy_base_point);
+	/*
+	if (game_info_.enemy_start_locations.empty()) {
+		return false;
+	}
+	target_pos = game_info_.enemy_start_locations.front();
+	return true;
+	*/
 }
 

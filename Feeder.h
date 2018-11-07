@@ -21,25 +21,29 @@ public:
 	virtual void OnBuildingConstructionComplete(const sc2::Unit *unit) override;
 	
 	// scout function
-	void ScoutWithMarines();
 
+	// buildings
 	void Observate();
 	void BuildStructures();
-	void BuildArmy();
 	bool TryBuildSupplyDepot();
 	bool TryBuildTrainingFacilities();
-
+	bool TryBuildExpansionCom();
 	bool TryBuildAddOn(AbilityID ability_type_for_structure, Tag base_structure);
-
 	bool BuildRefinery();
 
+	// build units
+	void BuildArmy();
 	bool TryBuildSCV();
 	bool TryBuildMarine();
 	bool TryBuildMarauder();
 
+	// actions
+	void ScoutWithMarines();
 	void ScoutWithSCV();
+	void AttackWithAllUnits();
 
-	bool TryBuildExpansionCom();
+	// utilitys
+	void GetAllEnemyBaseLocation(std::vector<Point2D> &rtv);
 
 private:
 	// different typenames of one type unit
@@ -71,6 +75,12 @@ private:
 	size_t food_cap;
 	size_t minerals;
 	size_t gas;
+
+	//  scout results
+	Point2D enemy_base_point;
+	GameInfo game_info_;
+	bool scv_scouting;
+
 	// ...
 	void clearObservation() {
 		scv_num = 0;
@@ -85,5 +95,8 @@ private:
 		minerals = 0;
 		gas = 0;
 	}
+
+	// interfaces 
+	ActionInterface* Action();
 };
 
