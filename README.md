@@ -1,3 +1,5 @@
+This is the bot Feeder!
+
 This build was not finished yet!
 TODO:
 add how to use this project
