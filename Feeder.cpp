@@ -475,7 +475,9 @@ bool Feeder::TryBuildMarauder() {
 void Feeder::ScoutWithSCV() {
 	const ObservationInterface* observation = Observation();
 
-	Units units = Observation()->GetUnits(Unit::Alliance::Self);
+	// get all SCV
+	Units SCVS = Observation()->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV));
+
 
 	if (!scv_scouting) {
 		scv_scouting = true;
@@ -484,12 +486,13 @@ void Feeder::ScoutWithSCV() {
 		return;
 	}
 	
+	//if we have no workers 
+	if (SCVS.empty()) {
+		return;
+	}
+
 	// get one scv to scout
- 	for (auto unit : units){
-		UnitTypeID unit_type(units.front()->unit_type);
-		
-		if (unit_type != UNIT_TYPEID::TERRAN_SCV)
-			continue;
+ 	for (auto unit : SCVS){
 
 		Point2D target_pos;
 		std::vector<Point2D> start_loactions;
