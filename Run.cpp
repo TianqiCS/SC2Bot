@@ -16,13 +16,14 @@ int main(int argc, char* argv[])
 		std::cout << "Unable to find or parse settings." << std::endl;
 		return 1;
 	}
+	coordinator.SetWindowSize(1024, 768);
 	coordinator.SetStepSize(1);
 	coordinator.SetRealtime(false);
 	coordinator.SetMultithreaded(true);
 	coordinator.SetParticipants({
 		CreateParticipant(sc2::Race::Terran, &bot),
 		//sc2::PlayerSetup(sc2::PlayerType::Observer,Util::GetRaceFromString(enemyRaceString)),
-		CreateComputer(sc2::Race::Random, Hard)
+		CreateComputer(sc2::Race::Random, VeryHard)
 	});
 	// Start the game.
 	coordinator.LaunchStarcraft();

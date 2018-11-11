@@ -647,6 +647,7 @@ void Feeder::ManageUpgrades() {
 		TryBuildUnit(ABILITY_ID::RESEARCH_STIMPACK, UNIT_TYPEID::TERRAN_BARRACKSTECHLAB);
 	}
 	else {
+		stim_researched_ = true;
 		for (const auto& upgrade : upgrades) {
 			if (false) { // temp
 				if (upgrade == UPGRADE_ID::TERRANSHIPWEAPONSLEVEL1 && base_count > 2) {
@@ -752,8 +753,9 @@ void Feeder::ManageArmy() {
 								has_stimmed = true;
 							}
 						}
-						if (distance < 6 && !has_stimmed) {
-							Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_STIM);
+						if (distance < 6 && !has_stimmed) { // old value 6
+							Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_STIM_MARINE);
+							//PrintStatus("use stimpack");
 							break;
 						}
 					}
@@ -778,8 +780,9 @@ void Feeder::ManageArmy() {
 								has_stimmed = true;
 							}
 						}
-						if (distance < 7 && !has_stimmed) {
-							Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_STIM);
+						if (distance < 7 && !has_stimmed) {  // old value 7
+							Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_STIM_MARAUDER);
+							//PrintStatus("use stimpack");
 							break;
 						}
 					}
