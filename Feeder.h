@@ -30,6 +30,10 @@ public:
 	bool TryBuildExpansionCom();
 	bool TryBuildAddOn(AbilityID ability_type_for_structure, Tag base_structure);
 	bool BuildRefinery();
+	bool TryBuildResearch();
+	
+	// research
+	void ManageUpgrades();
 
 	// build units
 	void BuildArmy();
