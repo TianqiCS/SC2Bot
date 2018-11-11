@@ -64,7 +64,7 @@ Feeder::Feeder() {
 //void Feeder::OnGameStart(){}
 // this is comment
 void Feeder::OnStep() {
-	Observate();
+	//Observate();
 	TryBuildSCV();
 	BuildStructures();
 	BuildArmy();
@@ -430,7 +430,7 @@ bool Feeder::TryBuildSCV() {
 	for (const auto& base : bases) {
 		if (base->unit_type == UNIT_TYPEID::TERRAN_ORBITALCOMMAND && base->energy > 50) {
 			if (FindNearestMineralPatch(base->pos)) {
-				Actions()->UnitCommand(base, ABILITY_ID::EFFECT_CALLDOWNMULE);
+				Actions()->UnitCommand(base, ABILITY_ID::EFFECT_CALLDOWNMULE, FindNearestMineralPatch(base->pos));
 			}
 		}
 	}
