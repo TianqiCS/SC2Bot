@@ -7,51 +7,6 @@
 
 using namespace sc2;
 
-struct IsAttackable {
-	bool operator()(const Unit& unit) {
-		switch (unit.unit_type.ToType()) {
-		case UNIT_TYPEID::ZERG_OVERLORD: return false;
-		case UNIT_TYPEID::ZERG_OVERSEER: return false;
-		case UNIT_TYPEID::PROTOSS_OBSERVER: return false;
-		default: return true;
-		}
-	}
-};
-
-struct IsTownHall {
-	bool operator()(const Unit& unit) {
-		switch (unit.unit_type.ToType()) {
-		case UNIT_TYPEID::ZERG_HATCHERY: return true;
-		case UNIT_TYPEID::ZERG_LAIR: return true;
-		case UNIT_TYPEID::ZERG_HIVE: return true;
-		case UNIT_TYPEID::TERRAN_COMMANDCENTER: return true;
-		case UNIT_TYPEID::TERRAN_ORBITALCOMMAND: return true;
-		case UNIT_TYPEID::TERRAN_ORBITALCOMMANDFLYING: return true;
-		case UNIT_TYPEID::TERRAN_PLANETARYFORTRESS: return true;
-		case UNIT_TYPEID::PROTOSS_NEXUS: return true;
-		default: return false;
-		}
-	}
-};
-
-struct IsStructure {
-	IsStructure(const ObservationInterface* obs) : observation_(obs) {};
-
-	bool operator()(const Unit& unit) {
-		auto& attributes = observation_->GetUnitTypeData().at(unit.unit_type).attributes;
-		bool is_structure = false;
-		for (const auto& attribute : attributes) {
-			if (attribute == Attribute::Structure) {
-				is_structure = true;
-			}
-		}
-		return is_structure;
-	}
-
-	const ObservationInterface* observation_;
-};
-
-
 Feeder::Feeder() {
 	PrintStatus("Feeder has been initialized..");
 
@@ -68,18 +23,20 @@ void Feeder::OnStep() {
 	TryBuildSCV();
 	BuildStructures();
 	BuildArmy();
+	ManageArmy();
 	if (enemy_base_point.x == 0.0f && enemy_base_point.y == 0.0f) { // not found enemy base
-		ScoutWithSCV();
+		//ScoutWithSCV();
 	}
 	else { // found enemy base
-		ScoutWithMarines();
+		ManageArmy();
 		//AttackWithAllUnits();
 	}
 	
 }
 
 void Feeder::OnUnitDestroyed(const sc2::Unit *unit) {
-
+	if (unit->alliance == Unit::Alliance::Self) {
+	}
 }
 void Feeder::OnUnitEnterVision(const sc2::Unit *unit) {
 	if (scv_scouting) {
@@ -207,6 +164,10 @@ void Feeder::BuildArmy() {
 		TryBuildMarauder();
 		TryBuildMarine();
 		
+	}
+
+	for (const auto& starport : starports) {
+		TrybuildMedivac();
 	}
 
 	for (const auto& factory : factorys) {
@@ -357,10 +318,11 @@ bool Feeder::TryBuildTrainingFacilities()
 		TryBuildStructure(ABILITY_ID::BUILD_BARRACKS, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
 	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
-			observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size() < 2) {
+			observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size() > 2 &&
+		observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size() < 1) {
 		TryBuildStructure(ABILITY_ID::BUILD_FACTORY, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
-	else if (observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size() &&
+	else if (observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size() > 2 &&
 			observation->GetUnits(Unit::Alliance::Self, IsUnits(starport_types)).size() < 2) {
 		TryBuildStructure(ABILITY_ID::BUILD_STARPORT, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
@@ -472,6 +434,10 @@ bool Feeder::TryBuildMarauder() {
 	return TryBuildUnit(ABILITY_ID::TRAIN_MARAUDER, UNIT_TYPEID::TERRAN_BARRACKS);
 }
 
+bool Feeder::TrybuildMedivac() {
+	return TryBuildUnit(ABILITY_ID::TRAIN_MEDIVAC, UNIT_TYPEID::TERRAN_STARPORT);
+}
+
 // TODO KNOWN BUG: in some cases, scv would not be sent to scout, 
 // probable cause: conflit between Scouting method and (BuildStructure || onIdle)
 void Feeder::ScoutWithSCV() {
@@ -554,7 +520,7 @@ bool Feeder::TryBuildExpansionCom() {
 // walk
 void Feeder::ScoutWithMarines() {
 	const ObservationInterface* observation = Observation();
-	Units units = Observation()->GetUnits(Unit::Alliance::Self);
+	Units units = Observation()->GetUnits(Unit::Alliance::Self, IsMyArmy());
 	Units enemy_units = observation->GetUnits(Unit::Alliance::Enemy, IsAttackable());
 	// count the number of Marines
 	size_t num_Marines = 0;
@@ -566,8 +532,6 @@ void Feeder::ScoutWithMarines() {
 	if (num_Marines < 20) { return; }
 	for (const auto& unit : units) {
 		UnitTypeID unit_type(unit->unit_type);
-		if (unit_type != UNIT_TYPEID::TERRAN_MARINE)
-			continue;
 
 		if (!unit->orders.empty())
 			continue;
@@ -608,7 +572,7 @@ void Feeder::ScoutWithMarines() {
 				Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, enemy_units.front());
 				return;
 			}
-			Actions()->UnitCommand(unit, ABILITY_ID::SMART, target_pos);
+			Actions()->UnitCommand(unit, ABILITY_ID::SCAN_MOVE, target_pos);
 		}
 		
 	}
@@ -665,12 +629,9 @@ bool Feeder::TryBuildResearch()
 		TryBuildStructure(ABILITY_ID::BUILD_ENGINEERINGBAY, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
 	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
-		observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size() < 2) {
-		TryBuildStructure(ABILITY_ID::BUILD_FACTORY, 1, UNIT_TYPEID::TERRAN_SCV);
-	}
-	else if (observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size() &&
-		observation->GetUnits(Unit::Alliance::Self, IsUnits(starport_types)).size() < 2) {
-		TryBuildStructure(ABILITY_ID::BUILD_STARPORT, 1, UNIT_TYPEID::TERRAN_SCV);
+		observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size() > 0 &&
+		!CountUnitType(observation, UNIT_TYPEID::TERRAN_ARMORY)) {
+		TryBuildStructure(ABILITY_ID::BUILD_ARMORY, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
 
 	return true;
@@ -733,6 +694,262 @@ void Feeder::ManageUpgrades() {
 				TryBuildUnit(ABILITY_ID::RESEARCH_CONCUSSIVESHELLS, UNIT_TYPEID::TERRAN_BARRACKSTECHLAB);
 				//TryBuildUnit(ABILITY_ID::RESEARCH_PERSONALCLOAKING, UNIT_TYPEID::TERRAN_GHOSTACADEMY);
 				//TryBuildUnit(ABILITY_ID::RESEARCH_BANSHEECLOAKINGFIELD, UNIT_TYPEID::TERRAN_STARPORTTECHLAB);
+			}
+		}
+	}
+}
+
+void Feeder::ManageArmy() {
+
+	const ObservationInterface* observation = Observation();
+
+	Units enemy_units = observation->GetUnits(Unit::Alliance::Enemy);
+
+	Units army = observation->GetUnits(Unit::Alliance::Self, IsArmy(observation));
+	int wait_til_supply = 50;
+
+	Units nuke = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_NUKE));
+	for (const auto& unit : army) {
+		if (enemy_units.empty() && observation->GetFoodArmy() < wait_til_supply) {
+			switch (unit->unit_type.ToType()) {
+			case UNIT_TYPEID::TERRAN_SIEGETANKSIEGED: {
+				Actions()->UnitCommand(unit, ABILITY_ID::MORPH_UNSIEGE);
+				break;
+			}
+			default:
+				RetreatWithUnit(unit, staging_location_);
+				break;
+			}
+		}
+		else if (!enemy_units.empty()) {
+			switch (unit->unit_type.ToType()) {
+			case UNIT_TYPEID::TERRAN_WIDOWMINE: {
+				float distance = std::numeric_limits<float>::max();
+				for (const auto& u : enemy_units) {
+					float d = Distance2D(u->pos, unit->pos);
+					if (d < distance) {
+						distance = d;
+					}
+				}
+				if (distance < 6) {
+					Actions()->UnitCommand(unit, ABILITY_ID::BURROWDOWN);
+				}
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_MARINE: {
+				if (stim_researched_ && !unit->orders.empty()) {
+					if (unit->orders.front().ability_id == ABILITY_ID::ATTACK) {
+						float distance = std::numeric_limits<float>::max();
+						for (const auto& u : enemy_units) {
+							float d = Distance2D(u->pos, unit->pos);
+							if (d < distance) {
+								distance = d;
+							}
+						}
+						bool has_stimmed = false;
+						for (const auto& buff : unit->buffs) {
+							if (buff == BUFF_ID::STIMPACK) {
+								has_stimmed = true;
+							}
+						}
+						if (distance < 6 && !has_stimmed) {
+							Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_STIM);
+							break;
+						}
+					}
+
+				}
+				AttackWithUnit(unit, observation);
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_MARAUDER: {
+				if (stim_researched_ && !unit->orders.empty()) {
+					if (unit->orders.front().ability_id == ABILITY_ID::ATTACK) {
+						float distance = std::numeric_limits<float>::max();
+						for (const auto& u : enemy_units) {
+							float d = Distance2D(u->pos, unit->pos);
+							if (d < distance) {
+								distance = d;
+							}
+						}
+						bool has_stimmed = false;
+						for (const auto& buff : unit->buffs) {
+							if (buff == BUFF_ID::STIMPACK) {
+								has_stimmed = true;
+							}
+						}
+						if (distance < 7 && !has_stimmed) {
+							Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_STIM);
+							break;
+						}
+					}
+				}
+				AttackWithUnit(unit, observation);
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_GHOST: {
+				float distance = std::numeric_limits<float>::max();
+				const Unit* closest_unit = nullptr;
+				for (const auto& u : enemy_units) {
+					float d = Distance2D(u->pos, unit->pos);
+					if (d < distance) {
+						distance = d;
+						closest_unit = u;
+					}
+				}
+				if (ghost_cloak_researched_) {
+					if (distance < 7 && unit->energy > 50) {
+						Actions()->UnitCommand(unit, ABILITY_ID::BEHAVIOR_CLOAKON);
+						break;
+					}
+				}
+				if (closest_unit && nuke_built ) {
+					Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_NUKECALLDOWN, closest_unit->pos);
+				}
+				else if (unit->energy > 50 && !unit->orders.empty()) {
+					if (unit->orders.front().ability_id == ABILITY_ID::ATTACK)
+						Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_GHOSTSNIPE, unit);
+					break;
+				}
+				AttackWithUnit(unit, observation);
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_SIEGETANK: {
+				float distance = std::numeric_limits<float>::max();
+				for (const auto& u : enemy_units) {
+					float d = Distance2D(u->pos, unit->pos);
+					if (d < distance) {
+						distance = d;
+					}
+				}
+				if (distance < 11) {
+					Actions()->UnitCommand(unit, ABILITY_ID::MORPH_SIEGEMODE);
+				}
+				else {
+					AttackWithUnit(unit, observation);
+				}
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_SIEGETANKSIEGED: {
+				float distance = std::numeric_limits<float>::max();
+				for (const auto& u : enemy_units) {
+					float d = Distance2D(u->pos, unit->pos);
+					if (d < distance) {
+						distance = d;
+					}
+				}
+				if (distance > 13) {
+					Actions()->UnitCommand(unit, ABILITY_ID::MORPH_UNSIEGE);
+				}
+				else {
+					AttackWithUnit(unit, observation);
+				}
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_MEDIVAC: {
+				Units bio_units = observation->GetUnits(Unit::Self, IsUnits(bio_types));
+				if (unit->orders.empty()) {
+					for (const auto& bio_unit : bio_units) {
+						if (bio_unit->health < bio_unit->health_max) {
+							Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_HEAL, bio_unit);
+							break;
+						}
+					}
+					if (!bio_units.empty()) {
+						Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, bio_units.front());
+					}
+				}
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_VIKINGFIGHTER: {
+				Units flying_units = observation->GetUnits(Unit::Enemy, IsFlying());
+				if (flying_units.empty()) {
+					Actions()->UnitCommand(unit, ABILITY_ID::MORPH_VIKINGASSAULTMODE);
+				}
+				else {
+					Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, flying_units.front());
+				}
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_VIKINGASSAULT: {
+				Units flying_units = observation->GetUnits(Unit::Enemy, IsFlying());
+				if (!flying_units.empty()) {
+					Actions()->UnitCommand(unit, ABILITY_ID::MORPH_VIKINGFIGHTERMODE);
+				}
+				else {
+					AttackWithUnit(unit, observation);
+				}
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_CYCLONE: {
+				Units flying_units = observation->GetUnits(Unit::Enemy, IsFlying());
+				if (!flying_units.empty() && unit->orders.empty()) {
+					Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_LOCKON, flying_units.front());
+				}
+				else if (!flying_units.empty() && !unit->orders.empty()) {
+					if (unit->orders.front().ability_id != ABILITY_ID::EFFECT_LOCKON) {
+						Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_LOCKON, flying_units.front());
+					}
+				}
+				else {
+					AttackWithUnit(unit, observation);
+				}
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_HELLION: {
+				if (CountUnitType(observation, UNIT_TYPEID::TERRAN_ARMORY) > 0) {
+					Actions()->UnitCommand(unit, ABILITY_ID::MORPH_HELLBAT);
+				}
+				AttackWithUnit(unit, observation);
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_BANSHEE: {
+				if (banshee_cloak_researched_) {
+					float distance = std::numeric_limits<float>::max();
+					for (const auto& u : enemy_units) {
+						float d = Distance2D(u->pos, unit->pos);
+						if (d < distance) {
+							distance = d;
+						}
+					}
+					if (distance < 7 && unit->energy > 50) {
+						Actions()->UnitCommand(unit, ABILITY_ID::BEHAVIOR_CLOAKON);
+					}
+				}
+				AttackWithUnit(unit, observation);
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_RAVEN: {
+				if (unit->energy > 125) {
+					Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_HUNTERSEEKERMISSILE, enemy_units.front());
+					break;
+				}
+				if (unit->orders.empty()) {
+					Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, army.front()->pos);
+				}
+				break;
+			}
+			default: {
+				AttackWithUnit(unit, observation);
+			}
+			}
+		}
+		else {
+			switch (unit->unit_type.ToType()) {
+			case UNIT_TYPEID::TERRAN_SIEGETANKSIEGED: {
+				Actions()->UnitCommand(unit, ABILITY_ID::MORPH_UNSIEGE);
+				break;
+			}
+			case UNIT_TYPEID::TERRAN_MEDIVAC: {
+				Units bio_units = observation->GetUnits(Unit::Self, IsUnits(bio_types));
+				if (unit->orders.empty()) {
+					Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, bio_units.front()->pos);
+				}
+				break;
+			}
+			default:
+				ScoutWithUnit(unit, observation);
+				break;
 			}
 		}
 	}
