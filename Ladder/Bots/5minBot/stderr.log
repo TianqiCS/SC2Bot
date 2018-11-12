@@ -1,0 +1,9 @@
+Client error: ConnectionClosed
+Client error: SC2AppFailure
+Assertion failed: pi_.process_id, file C:\Users\D\Desktop\SC2 AI\s2client-api\src\sc2api\sc2_client.cc, line 1825
+Client error: ResponseMismatch
+Client error: ResponseMismatch
+While waiting for ResponseStep received an error.
+Error: Unable to complete the step request, not in a game.
+Protocol error: Unable to complete the step request, not in a game.
+Client error: SC2ProtocolError

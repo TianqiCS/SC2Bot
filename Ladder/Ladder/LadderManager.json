@@ -1,0 +1,13 @@
+{
+    "CommandCenterPath": "../Bots/CommandCenter/CommandCenter.exe",
+    "LocalReplayDirectory": "../Replays/",
+    "UploadResultLocation": "http://127.0.0.1/fileupload9uysm34.php",
+    "MaxGameTime": "60480",
+    "MatchupListFile": "./matchuplist",
+    "ErrorListFile": "./errorlist",
+    "BotConfigFile": "../Bots/LadderBots.json",
+    "EnableReplayUpload": "False",
+    "ResultsLogFile": "./Results.json",
+    "PlayerIdFile": "./playerids",
+    "PythonBinary": "python"
+}

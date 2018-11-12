@@ -1,0 +1,20 @@
+{
+    "Results": [
+        {
+            "Bot1": "Feeder",
+            "Bot2": "Feeder",
+            "Winner": "Feeder",
+            "Map": "CactusValleyLE.SC2Map",
+            "Result": "Player2Crash",
+            "GameTime": 0
+        },
+        {
+            "Bot1": "Feeder",
+            "Bot2": "4raxBot",
+            "Winner": "4raxBot",
+            "Map": "CactusValleyLE.SC2Map",
+            "Result": "Player1Crash",
+            "GameTime": 7310
+        }
+    ]
+}

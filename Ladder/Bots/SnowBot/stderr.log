@@ -1,0 +1,805 @@
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 530, in transfer_data
+    msg = yield from self.read_message()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 582, in read_message
+    frame = yield from self.read_data_frame(max_size=self.max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 647, in read_data_frame
+    frame = yield from self.read_frame(max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 712, in read_frame
+    extensions=self.extensions,
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\framing.py", line 100, in read
+    data = yield from reader(2)
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 668, in readexactly
+    yield from self._wait_for_data('readexactly')
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 458, in _wait_for_data
+    yield from self._waiter
+  File "C:\Program Files\Python36\lib\asyncio\selector_events.py", line 724, in _read_ready
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.recv()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 352, in recv
+    yield from self.ensure_open()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 503, in ensure_open
+    self.close_code, self.close_reason) from self.transfer_data_exc
+websockets.exceptions.ConnectionClosed: WebSocket connection is closed: code = 1006 (connection closed abnormally [internal]), no reason
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 87, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 74, in _play_game_ai
+    await client.step()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 103, in step
+    result = await self._execute(step=sc_pb.RequestStep(count=8))
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 530, in transfer_data
+    msg = yield from self.read_message()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 582, in read_message
+    frame = yield from self.read_data_frame(max_size=self.max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 647, in read_data_frame
+    frame = yield from self.read_frame(max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 712, in read_frame
+    extensions=self.extensions,
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\framing.py", line 100, in read
+    data = yield from reader(2)
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 668, in readexactly
+    yield from self._wait_for_data('readexactly')
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 458, in _wait_for_data
+    yield from self._waiter
+  File "C:\Program Files\Python36\lib\asyncio\selector_events.py", line 724, in _read_ready
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.recv()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 352, in recv
+    yield from self.ensure_open()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 503, in ensure_open
+    self.close_code, self.close_reason) from self.transfer_data_exc
+websockets.exceptions.ConnectionClosed: WebSocket connection is closed: code = 1006 (connection closed abnormally [internal]), no reason
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 87, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 37, in _play_game_ai
+    state = await client.observation()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 93, in observation
+    result = await self._execute(observation=sc_pb.RequestObservation())
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 87, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 29, in _play_game_ai
+    game_data = await client.get_game_data()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 110, in get_game_data
+    upgrade_id=True
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 56, in _execute
+    raise ProtocolError(f"{response.error}")
+sc2.protocol.ProtocolError: ['A game has not been started yet']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 87, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 29, in _play_game_ai
+    game_data = await client.get_game_data()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 110, in get_game_data
+    upgrade_id=True
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 56, in _execute
+    raise ProtocolError(f"{response.error}")
+sc2.protocol.ProtocolError: ['A game has not been started yet']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 87, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 29, in _play_game_ai
+    game_data = await client.get_game_data()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 110, in get_game_data
+    upgrade_id=True
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 56, in _execute
+    raise ProtocolError(f"{response.error}")
+sc2.protocol.ProtocolError: ['A game has not been started yet']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 530, in transfer_data
+    msg = yield from self.read_message()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 582, in read_message
+    frame = yield from self.read_data_frame(max_size=self.max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 647, in read_data_frame
+    frame = yield from self.read_frame(max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 712, in read_frame
+    extensions=self.extensions,
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\framing.py", line 100, in read
+    data = yield from reader(2)
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 668, in readexactly
+    yield from self._wait_for_data('readexactly')
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 458, in _wait_for_data
+    yield from self._waiter
+  File "C:\Program Files\Python36\lib\asyncio\selector_events.py", line 724, in _read_ready
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.recv()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 352, in recv
+    yield from self.ensure_open()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 503, in ensure_open
+    self.close_code, self.close_reason) from self.transfer_data_exc
+websockets.exceptions.ConnectionClosed: WebSocket connection is closed: code = 1006 (connection closed abnormally [internal]), no reason
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 81, in _play_game
+    player_id = await client.join_game(player.race, portconfig=portconfig)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 62, in join_game
+    result = await self._execute(join_game=req)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 530, in transfer_data
+    msg = yield from self.read_message()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 582, in read_message
+    frame = yield from self.read_data_frame(max_size=self.max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 647, in read_data_frame
+    frame = yield from self.read_frame(max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 712, in read_frame
+    extensions=self.extensions,
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\framing.py", line 100, in read
+    data = yield from reader(2)
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 668, in readexactly
+    yield from self._wait_for_data('readexactly')
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 458, in _wait_for_data
+    yield from self._waiter
+  File "C:\Program Files\Python36\lib\asyncio\selector_events.py", line 724, in _read_ready
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.recv()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 352, in recv
+    yield from self.ensure_open()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 503, in ensure_open
+    self.close_code, self.close_reason) from self.transfer_data_exc
+websockets.exceptions.ConnectionClosed: WebSocket connection is closed: code = 1006 (connection closed abnormally [internal]), no reason
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 81, in _play_game
+    player_id = await client.join_game(player.race, portconfig=portconfig)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 62, in join_game
+    result = await self._execute(join_game=req)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 530, in transfer_data
+    msg = yield from self.read_message()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 582, in read_message
+    frame = yield from self.read_data_frame(max_size=self.max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 647, in read_data_frame
+    frame = yield from self.read_frame(max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 712, in read_frame
+    extensions=self.extensions,
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\framing.py", line 100, in read
+    data = yield from reader(2)
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 666, in readexactly
+    raise IncompleteReadError(incomplete, n)
+asyncio.streams.IncompleteReadError: 0 bytes read on a total of 2 expected bytes
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.recv()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 352, in recv
+    yield from self.ensure_open()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 503, in ensure_open
+    self.close_code, self.close_reason) from self.transfer_data_exc
+websockets.exceptions.ConnectionClosed: WebSocket connection is closed: code = 1006 (connection closed abnormally [internal]), no reason
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 87, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 37, in _play_game_ai
+    state = await client.observation()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 89, in observation
+    result = await self._execute(observation=sc_pb.RequestObservation())
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 530, in transfer_data
+    msg = yield from self.read_message()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 582, in read_message
+    frame = yield from self.read_data_frame(max_size=self.max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 647, in read_data_frame
+    frame = yield from self.read_frame(max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 712, in read_frame
+    extensions=self.extensions,
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\framing.py", line 100, in read
+    data = yield from reader(2)
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 668, in readexactly
+    yield from self._wait_for_data('readexactly')
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 458, in _wait_for_data
+    yield from self._waiter
+  File "C:\Program Files\Python36\lib\asyncio\selector_events.py", line 724, in _read_ready
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.recv()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 352, in recv
+    yield from self.ensure_open()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 503, in ensure_open
+    self.close_code, self.close_reason) from self.transfer_data_exc
+websockets.exceptions.ConnectionClosed: WebSocket connection is closed: code = 1006 (connection closed abnormally [internal]), no reason
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 87, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 74, in _play_game_ai
+    await client.step()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 103, in step
+    result = await self._execute(step=sc_pb.RequestStep(count=8))
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 530, in transfer_data
+    msg = yield from self.read_message()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 582, in read_message
+    frame = yield from self.read_data_frame(max_size=self.max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 647, in read_data_frame
+    frame = yield from self.read_frame(max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 712, in read_frame
+    extensions=self.extensions,
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\framing.py", line 100, in read
+    data = yield from reader(2)
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 668, in readexactly
+    yield from self._wait_for_data('readexactly')
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 458, in _wait_for_data
+    yield from self._waiter
+  File "C:\Program Files\Python36\lib\asyncio\selector_events.py", line 724, in _read_ready
+    data = self._sock.recv(self.max_size)
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 26, in __request
+    await self._ws.send(request.SerializeToString())
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 363, in send
+    yield from self.ensure_open()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 503, in ensure_open
+    self.close_code, self.close_reason) from self.transfer_data_exc
+websockets.exceptions.ConnectionClosed: WebSocket connection is closed: code = 1006 (connection closed abnormally [internal]), no reason
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 74, in join_ladder_game
+    await client.leave()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 76, in leave
+    await self._execute(leave_game=sc_pb.RequestLeaveGame())
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 29, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 530, in transfer_data
+    msg = yield from self.read_message()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 582, in read_message
+    frame = yield from self.read_data_frame(max_size=self.max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 647, in read_data_frame
+    frame = yield from self.read_frame(max_size)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 712, in read_frame
+    extensions=self.extensions,
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\framing.py", line 100, in read
+    data = yield from reader(2)
+  File "C:\Program Files\Python36\lib\asyncio\streams.py", line 666, in readexactly
+    raise IncompleteReadError(incomplete, n)
+asyncio.streams.IncompleteReadError: 0 bytes read on a total of 2 expected bytes
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.recv()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 352, in recv
+    yield from self.ensure_open()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\websockets\protocol.py", line 503, in ensure_open
+    self.close_code, self.close_reason) from self.transfer_data_exc
+websockets.exceptions.ConnectionClosed: WebSocket connection is closed: code = 1006 (connection closed abnormally [internal]), no reason
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 87, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\main.py", line 74, in _play_game_ai
+    await client.step()
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\client.py", line 103, in step
+    result = await self._execute(step=sc_pb.RequestStep(count=8))
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\crypt\AppData\Roaming\Python\Python36\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Program Files\Python36\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "E:\sc2Dll\Jul18\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.receive_bytes()
+  File "C:\Users\D\Anaconda3\lib\site-packages\aiohttp\client_ws.py", line 254, in receive_bytes
+    msg.data))
+TypeError: Received message 257:None is not bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\main.py", line 89, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\main.py", line 37, in _play_game_ai
+    state = await client.observation()
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\client.py", line 97, in observation
+    result = await self._execute(observation=sc_pb.RequestObservation())
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Users\D\Anaconda3\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.receive_bytes()
+  File "C:\Users\D\Anaconda3\lib\site-packages\aiohttp\client_ws.py", line 254, in receive_bytes
+    msg.data))
+TypeError: Received message 257:None is not bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\main.py", line 89, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\main.py", line 76, in _play_game_ai
+    await client.step()
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\client.py", line 112, in step
+    result = await self._execute(step=sc_pb.RequestStep(count=self.game_step))
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Users\D\Anaconda3\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.receive_bytes()
+  File "C:\Users\D\Anaconda3\lib\site-packages\aiohttp\client_ws.py", line 254, in receive_bytes
+    msg.data))
+TypeError: Received message 257:None is not bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 74, in join_ladder_game
+    await client.leave()
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\client.py", line 84, in leave
+    await self._execute(leave_game=sc_pb.RequestLeaveGame())
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Users\D\Anaconda3\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.receive_bytes()
+  File "C:\Users\D\Anaconda3\lib\site-packages\aiohttp\client_ws.py", line 254, in receive_bytes
+    msg.data))
+TypeError: Received message 257:None is not bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 74, in join_ladder_game
+    await client.leave()
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\client.py", line 84, in leave
+    await self._execute(leave_game=sc_pb.RequestLeaveGame())
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Users\D\Anaconda3\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.receive_bytes()
+  File "C:\Users\D\Anaconda3\lib\site-packages\aiohttp\client_ws.py", line 254, in receive_bytes
+    msg.data))
+TypeError: Received message 257:None is not bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 74, in join_ladder_game
+    await client.leave()
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\client.py", line 84, in leave
+    await self._execute(leave_game=sc_pb.RequestLeaveGame())
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Users\D\Anaconda3\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.receive_bytes()
+  File "C:\Users\D\Anaconda3\lib\site-packages\aiohttp\client_ws.py", line 254, in receive_bytes
+    msg.data))
+TypeError: Received message 257:None is not bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\main.py", line 89, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\main.py", line 76, in _play_game_ai
+    await client.step()
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\client.py", line 112, in step
+    result = await self._execute(step=sc_pb.RequestStep(count=self.game_step))
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Users\D\Anaconda3\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.receive_bytes()
+  File "C:\Users\D\Anaconda3\lib\site-packages\aiohttp\client_ws.py", line 254, in receive_bytes
+    msg.data))
+TypeError: Received message 257:None is not bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\main.py", line 83, in _play_game
+    player_id = await client.join_game(player.race, portconfig=portconfig)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\client.py", line 70, in join_game
+    result = await self._execute(join_game=req)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Users\D\Anaconda3\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "C:\Ladder\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined
+Traceback (most recent call last):
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 34, in __request
+    response_bytes = await self._ws.receive_bytes()
+  File "C:\Users\D\Anaconda3\lib\site-packages\aiohttp\client_ws.py", line 254, in receive_bytes
+    msg.data))
+TypeError: Received message 257:None is not bytes
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\D\Desktop\Ladder\Bots\SnowBot\__init__.py", line 71, in join_ladder_game
+    result = await sc2.main._play_game(players[0], client, realtime, portconfig, step_time_limit, game_time_limit)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\main.py", line 89, in _play_game
+    result = await _play_game_ai(client, player_id, player.ai, realtime, step_time_limit, game_time_limit)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\main.py", line 37, in _play_game_ai
+    state = await client.observation()
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\client.py", line 97, in observation
+    result = await self._execute(observation=sc_pb.RequestObservation())
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 47, in _execute
+    response = await self.__request(request)
+  File "C:\Users\D\Anaconda3\lib\site-packages\sc2\protocol.py", line 37, in __request
+    raise ConnectionAlreadyClosed("Connection already closed.")
+sc2.protocol.ConnectionAlreadyClosed: Connection already closed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "run.py", line 19, in <module>
+    run_ladder_game(bot)
+  File "C:\Users\D\Desktop\Ladder\Bots\SnowBot\__init__.py", line 61, in run_ladder_game
+    result = asyncio.get_event_loop().run_until_complete(g)
+  File "C:\Users\D\Anaconda3\lib\asyncio\base_events.py", line 467, in run_until_complete
+    return future.result()
+  File "C:\Users\D\Desktop\Ladder\Bots\SnowBot\__init__.py", line 76, in join_ladder_game
+    except ConnectionAlreadyClosed:
+NameError: name 'ConnectionAlreadyClosed' is not defined

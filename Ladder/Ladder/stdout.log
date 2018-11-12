@@ -1,0 +1,54 @@
+2416: Feeder has been initialized..
+--OpponentId is an unrecognized argument.
+--GamePort is an unrecognized argument.
+Connecting to port 5677
+2448: Feeder has been initialized..
+--OpponentId is an unrecognized argument.
+--GamePort is an unrecognized argument.
+Connecting to port 5678
+
+Connected to 127.0.0.1:5677
+Waiting for the JoinGame response.
+
+Connected to 127.0.0.1:5678
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+2416: game started.
+WaitJoinGame finished successfully.
+2448: game started.
+80: Feeder has been initialized..
+--OpponentId is an unrecognized argument.
+368: Feeder has been initialized..
+--GamePort is an unrecognized argument.
+--OpponentId is an unrecognized argument.
+Connecting to port 5677
+--GamePort is an unrecognized argument.
+Connecting to port 5678
+
+Connected to 127.0.0.1:5677
+Waiting for the JoinGame response.
+
+Connected to 127.0.0.1:5678
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+WaitJoinGame finished successfully.
+80: game started.
+368: game started.
+128: Feeder has been initialized..
+--OpponentId is an unrecognized argument.
+--GamePort is an unrecognized argument.
+Connecting to port 5677
+3792: Feeder has been initialized..
+--OpponentId is an unrecognized argument.
+--GamePort is an unrecognized argument.
+Connecting to port 5678
+
+Connected to 127.0.0.1:5677
+Waiting for the JoinGame response.
+
+Connected to 127.0.0.1:5678
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+WaitJoinGame finished successfully.
+3792: game started.
+128: game started.
