@@ -2,6 +2,7 @@
 #include "sc2lib/sc2_lib.h"
 #include "sc2utils/sc2_manage_process.h"
 #include "sc2utils/sc2_arg_parser.h"
+#include "LadderInterface.h"
 
 #include "feeder.h"
 #include <iostream>
@@ -9,7 +10,7 @@
 #ifdef DEBUG
 int main(int argc, char* argv[])
 {
-	Feeder bot;
+	/*Feeder bot;
 	sc2::Coordinator coordinator;
 	if (!coordinator.LoadSettings(argc, argv))
 	{
@@ -17,16 +18,16 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 	coordinator.SetWindowSize(1024, 768);
-	coordinator.SetStepSize(1);
+	coordinator.SetStepSize(100); // speed
 	coordinator.SetRealtime(false);
 	coordinator.SetMultithreaded(true);
 	coordinator.SetParticipants({
 		CreateParticipant(sc2::Race::Terran, &bot),
 		//sc2::PlayerSetup(sc2::PlayerType::Observer,Util::GetRaceFromString(enemyRaceString)),
-		CreateComputer(sc2::Race::Random, VeryHard)
+		CreateComputer(sc2::Race::Random, Easy)
 	});
 	// Start the game.
-	coordinator.LaunchStarcraft();
+	//coordinator.LaunchStarcraft();
 	coordinator.StartGame("/CactusValleyLE.SC2Map");
 	//coordinator.StartGame("Interloper LE");
 
@@ -35,12 +36,15 @@ int main(int argc, char* argv[])
 	while (coordinator.Update())
 	{
 	}
+	*/
+	RunBot(argc, argv, new Feeder(), sc2::Race::Terran);
+	return 0;
 }
 #else
-#include "LadderInterface.h"
+
 int main(int argc, char* argv[])
 {
-	RunBot(argc, argv, new CryptBot(), sc2::Race::Protoss);
+	RunBot(argc, argv, new Feeder(), sc2::Race::Terran);
 
 	return 0;
 }

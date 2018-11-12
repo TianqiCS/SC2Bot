@@ -68,6 +68,7 @@ void Feeder::OnUnitCreated(const sc2::Unit *unit) {
 	
 }
 
+
 void Feeder::OnUnitIdle(const sc2::Unit *unit) {
 	switch (unit->unit_type.ToType()) {
 	case UNIT_TYPEID::TERRAN_SCV: {

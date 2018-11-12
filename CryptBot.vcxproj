@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Bot.h" />
     <ClInclude Include="Feeder.h" />
+    <ClInclude Include="LadderInterface.h" />
     <ClInclude Include="Logger.h" />
   </ItemGroup>
   <ItemGroup>
