@@ -149,6 +149,7 @@ public:
 
 	// actions
 	void ScoutWithMarines();
+	void tryScoutWithSCV();
 	void ScoutWithSCV();
 	void AttackWithAllUnits();
 

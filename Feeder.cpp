@@ -24,13 +24,7 @@ void Feeder::OnStep() {
 	BuildStructures();
 	BuildArmy();
 	ManageArmy();
-	if (enemy_base_point.x == 0.0f && enemy_base_point.y == 0.0f) { // not found enemy base
-		//ScoutWithSCV();
-	}
-	else { // found enemy base
-		ManageArmy();
-		//AttackWithAllUnits();
-	}
+	tryScoutWithSCV();
 	
 }
 
@@ -132,7 +126,7 @@ void Feeder::BuildArmy() {
 	Units starports_tech = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_STARPORTTECHLAB));
 
 	Units supply_depots = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_SUPPLYDEPOT));
-	if (bases.size() < 2 && observation->GetMinerals() > 1000) {
+	if (bases.size() < 2 && observation->GetMinerals() > 600) {
 		TryBuildExpansionCom();
 		return;
 	}
@@ -143,7 +137,7 @@ void Feeder::BuildArmy() {
 
 	if (!barracks.empty()) {
 		for (const auto& base : bases) {
-			if (base->unit_type == UNIT_TYPEID::TERRAN_COMMANDCENTER && observation->GetMinerals() > 150) {
+			if (base->unit_type == UNIT_TYPEID::TERRAN_COMMANDCENTER && observation->GetMinerals() > 251) {
 				Actions()->UnitCommand(base, ABILITY_ID::MORPH_ORBITALCOMMAND);
 			}
 		}
@@ -153,12 +147,18 @@ void Feeder::BuildArmy() {
 		if (!barrack->orders.empty() || barrack->build_progress != 1) {
 			continue;
 		}
+
+		// need at least 2 barracks to consider addon
+		if (barracks.size() < 2) { return; }
+		
 		if (observation->GetUnit(barrack->add_on_tag) == nullptr) {
 			if (barracks_tech.size() < barracks.size() / 2 || barracks_tech.empty()) {
 				TryBuildAddOn(ABILITY_ID::BUILD_TECHLAB_BARRACKS, barrack->tag);
 			}
 			else {
-				TryBuildAddOn(ABILITY_ID::BUILD_REACTOR_BARRACKS, barrack->tag);
+				// TODO: after adding reactor, the barrack still build 1 unit at a time
+				// We need to build tow if we have reactor!
+				//TryBuildAddOn(ABILITY_ID::BUILD_REACTOR_BARRACKS, barrack->tag);
 			}
 		}
 		TryBuildMarauder();
@@ -279,23 +279,32 @@ void Feeder::BuildArmy() {
 
 bool Feeder::TryBuildSupplyDepot() {
 	const ObservationInterface* observation = Observation();
+	barracks_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size();
 
-	// If we are not supply capped, don't build a supply depot.
-	if (observation->GetFoodUsed() < observation->GetFoodCap() - 3) {
+	// If we do not have enough minerals
+	if (observation->GetMinerals() < 100) {
 		return false;
 	}
 
-	//if (observation->GetMinerals() < 100) {
-	//	return false;
-	//}
+	// If we are not supply capped, don't build a supply depot.
+	if (observation->GetFoodUsed() < observation->GetFoodCap() - (3 + barracks_num*2 )) {
+		return false;
+	}
+
+
 
 	//check to see if there is already on building
 	Units units = observation->GetUnits(Unit::Alliance::Self, IsUnits(supply_depot_types));
-	if (observation->GetFoodUsed() < 40) {
+	if (observation->GetFoodUsed() < 50) {
 		for (const auto& unit : units) {
 			if (unit->build_progress != 1) {
 				return false;
 			}
+		}
+	}
+	else {
+		if (observation->GetFoodUsed() == observation->GetFoodCap()) {
+			TryBuildStructure(ABILITY_ID::BUILD_SUPPLYDEPOT, 1, UNIT_TYPEID::TERRAN_SCV);
 		}
 	}
 
@@ -316,6 +325,9 @@ bool Feeder::TryBuildTrainingFacilities()
 
 	if (barracks_num < 4) {
 		TryBuildStructure(ABILITY_ID::BUILD_BARRACKS, 1, UNIT_TYPEID::TERRAN_SCV);
+		if (observation->GetMinerals() > 250 && barracks_num < 4) {
+			TryBuildStructure(ABILITY_ID::BUILD_BARRACKS, 2, UNIT_TYPEID::TERRAN_SCV);
+		}
 	}
 	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
 			observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size() > 2 &&
@@ -369,7 +381,14 @@ bool Feeder::TryBuildAddOn(AbilityID ability_type_for_structure, Tag base_struct
 
 bool Feeder::BuildRefinery() {
 	const ObservationInterface* observation = Observation();
+
+	//only build refinery after we have one barrack
+	barracks_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size();
+	if (barracks_num < 0) { return false; }
+
+
 	Units bases = observation->GetUnits(Unit::Alliance::Self, IsTownHall());
+	
 
 	if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) >= observation->GetUnits(Unit::Alliance::Self, IsTownHall()).size() * 2) {
 		return false;
@@ -416,10 +435,10 @@ bool Feeder::TryBuildSCV() {
 
 	for (const auto& base : bases) {
 		//if there is a base with less than ideal workers
-		if (base->assigned_harvesters < base->ideal_harvesters && base->build_progress == 1) {
-			if (observation->GetMinerals() >= 50) {
-				return TryBuildUnit(ABILITY_ID::TRAIN_SCV, base->unit_type);
-			}
+		if (base->assigned_harvesters <= base->ideal_harvesters && base->build_progress == 1) {
+			
+			return TryBuildUnit(ABILITY_ID::TRAIN_SCV, base->unit_type);
+			
 		}
 	}
 	//return TryBuildUnit(ABILITY_ID::TRAIN_SCV, UNIT_TYPEID::TERRAN_COMMANDCENTER);
@@ -445,7 +464,9 @@ void Feeder::ScoutWithSCV() {
 
 	// get all SCV
 	Units SCVS = Observation()->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV));
+	barracks_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size();
 
+	if (barracks_num >= 0 && SCVS.size() < 15) { return; }
 
 	if (!scv_scouting) {
 		scv_scouting = true;
@@ -469,7 +490,7 @@ void Feeder::ScoutWithSCV() {
 
 		// for each possible enemy base location
 		for (Point2D &point : start_loactions) {
-			Actions()->UnitCommand(unit, ABILITY_ID::MOVE, point, true); // queue orders
+			Actions()->UnitCommand(unit, ABILITY_ID::SMART, point, true); // queue orders
 		}
 
 		break;
@@ -625,14 +646,14 @@ bool Feeder::TryBuildResearch()
 	barracks_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size();
 	factory_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size();
 
-	if (barracks_num && !CountUnitType(observation, UNIT_TYPEID::TERRAN_ENGINEERINGBAY)) {
+	if (barracks_num >= 3 && !CountUnitType(observation, UNIT_TYPEID::TERRAN_ENGINEERINGBAY)) {
 		TryBuildStructure(ABILITY_ID::BUILD_ENGINEERINGBAY, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
-	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
-		observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size() > 0 &&
-		!CountUnitType(observation, UNIT_TYPEID::TERRAN_ARMORY)) {
-		TryBuildStructure(ABILITY_ID::BUILD_ARMORY, 1, UNIT_TYPEID::TERRAN_SCV);
-	}
+//	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
+//		observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size() > 0 &&
+//		!CountUnitType(observation, UNIT_TYPEID::TERRAN_ARMORY)) {
+//		TryBuildStructure(ABILITY_ID::BUILD_ARMORY, 1, UNIT_TYPEID::TERRAN_SCV);
+//	}
 
 	return true;
 }
@@ -707,22 +728,15 @@ void Feeder::ManageArmy() {
 	Units enemy_units = observation->GetUnits(Unit::Alliance::Enemy);
 
 	Units army = observation->GetUnits(Unit::Alliance::Self, IsArmy(observation));
-	int wait_til_supply = 50;
+	int wait_til_supply = 30;
 
 	Units nuke = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_NUKE));
 	for (const auto& unit : army) {
 		if (enemy_units.empty() && observation->GetFoodArmy() < wait_til_supply) {
-			switch (unit->unit_type.ToType()) {
-			case UNIT_TYPEID::TERRAN_SIEGETANKSIEGED: {
-				Actions()->UnitCommand(unit, ABILITY_ID::MORPH_UNSIEGE);
-				break;
-			}
-			default:
-				RetreatWithUnit(unit, staging_location_);
-				break;
-			}
+			RetreatWithUnit(unit, staging_location_);
 		}
-		else if (!enemy_units.empty()) {
+		// time to atack
+		else if (!enemy_units.empty() && observation->GetFoodArmy() > wait_til_supply) {
 			switch (unit->unit_type.ToType()) {
 			case UNIT_TYPEID::TERRAN_WIDOWMINE: {
 				float distance = std::numeric_limits<float>::max();
@@ -790,65 +804,7 @@ void Feeder::ManageArmy() {
 				AttackWithUnit(unit, observation);
 				break;
 			}
-			case UNIT_TYPEID::TERRAN_GHOST: {
-				float distance = std::numeric_limits<float>::max();
-				const Unit* closest_unit = nullptr;
-				for (const auto& u : enemy_units) {
-					float d = Distance2D(u->pos, unit->pos);
-					if (d < distance) {
-						distance = d;
-						closest_unit = u;
-					}
-				}
-				if (ghost_cloak_researched_) {
-					if (distance < 7 && unit->energy > 50) {
-						Actions()->UnitCommand(unit, ABILITY_ID::BEHAVIOR_CLOAKON);
-						break;
-					}
-				}
-				if (closest_unit && nuke_built ) {
-					Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_NUKECALLDOWN, closest_unit->pos);
-				}
-				else if (unit->energy > 50 && !unit->orders.empty()) {
-					if (unit->orders.front().ability_id == ABILITY_ID::ATTACK)
-						Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_GHOSTSNIPE, unit);
-					break;
-				}
-				AttackWithUnit(unit, observation);
-				break;
-			}
-			case UNIT_TYPEID::TERRAN_SIEGETANK: {
-				float distance = std::numeric_limits<float>::max();
-				for (const auto& u : enemy_units) {
-					float d = Distance2D(u->pos, unit->pos);
-					if (d < distance) {
-						distance = d;
-					}
-				}
-				if (distance < 11) {
-					Actions()->UnitCommand(unit, ABILITY_ID::MORPH_SIEGEMODE);
-				}
-				else {
-					AttackWithUnit(unit, observation);
-				}
-				break;
-			}
-			case UNIT_TYPEID::TERRAN_SIEGETANKSIEGED: {
-				float distance = std::numeric_limits<float>::max();
-				for (const auto& u : enemy_units) {
-					float d = Distance2D(u->pos, unit->pos);
-					if (d < distance) {
-						distance = d;
-					}
-				}
-				if (distance > 13) {
-					Actions()->UnitCommand(unit, ABILITY_ID::MORPH_UNSIEGE);
-				}
-				else {
-					AttackWithUnit(unit, observation);
-				}
-				break;
-			}
+
 			case UNIT_TYPEID::TERRAN_MEDIVAC: {
 				Units bio_units = observation->GetUnits(Unit::Self, IsUnits(bio_types));
 				if (unit->orders.empty()) {
@@ -932,28 +888,34 @@ void Feeder::ManageArmy() {
 				}
 				break;
 			}
-			default: {
+			default: 
 				AttackWithUnit(unit, observation);
-			}
 			}
 		}
 		else {
 			switch (unit->unit_type.ToType()) {
-			case UNIT_TYPEID::TERRAN_SIEGETANKSIEGED: {
-				Actions()->UnitCommand(unit, ABILITY_ID::MORPH_UNSIEGE);
-				break;
-			}
 			case UNIT_TYPEID::TERRAN_MEDIVAC: {
 				Units bio_units = observation->GetUnits(Unit::Self, IsUnits(bio_types));
 				if (unit->orders.empty()) {
-					Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, bio_units.front()->pos);
+					Actions()->UnitCommand(unit, ABILITY_ID::SMART, bio_units.front()->pos);
 				}
 				break;
 			}
 			default:
-				ScoutWithUnit(unit, observation);
+				//ScoutWithUnit(unit, observation);
 				break;
 			}
 		}
 	}
+}
+
+void Feeder::tryScoutWithSCV() {
+	if (enemy_base_point.x == 0.0f && enemy_base_point.y == 0.0f) { // not found enemy base
+		ScoutWithSCV();
+	}
+	else { // found enemy base
+		ManageArmy();
+		//AttackWithAllUnits();
+	}
+
 }
