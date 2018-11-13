@@ -382,7 +382,7 @@ bool Bot::TryBuildStructure(AbilityID ability_type_for_structure, UnitTypeID uni
 
 }
 
-
+// OUR CODE: return location that is not in mining area
 Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 	const ObservationInterface* observation = Observation();
 	float rx, ry;
@@ -390,12 +390,7 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 	bool IsGoodLocation = false;
 	std::vector<std::pair<Point2D, Point2D> > resource_base_pair;
 
-	Units rocks = observation->GetUnits(
-		[](const Unit& unit) {
-		return unit.unit_type == 472;
-	}
-	);
-
+	// findall resources on map
 	Units resources = observation->GetUnits(
 		[](const Unit& unit) {
 		return unit.unit_type == UNIT_TYPEID::NEUTRAL_MINERALFIELD || unit.unit_type == UNIT_TYPEID::NEUTRAL_MINERALFIELD750 ||
@@ -410,6 +405,7 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 	}
 	);
 
+	// findall self command center
 	Units command_centers = observation->GetUnits(
 		[](const Unit& unit) {
 		return (unit.unit_type == UNIT_TYPEID::TERRAN_COMMANDCENTER || unit.unit_type == UNIT_TYPEID::TERRAN_PLANETARYFORTRESS ||
@@ -417,6 +413,7 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 	}
 	);
 
+	// if not found command center
 	if (command_centers.empty()) {
 		std::cerr << "fail to find command center" << std::endl;
 		rx = GetRandomScalar();
@@ -427,6 +424,7 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 
 	}
 
+	// for each resource, find its closest command center
 	for (auto resource : resources) {
 		Point2D closest_base;
 		float min_distance;
@@ -436,6 +434,7 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 
 		min_distance = Distance2D(closest_base, Point2D(resource->pos.x, resource->pos.y));
 
+		// find closest base for current resource
 		for (auto base : command_centers) {
 			float new_d, new_x, new_y;
 
@@ -450,6 +449,8 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 
 			}
 		}
+
+		// if close enough, push to good pair
 		if (min_distance < 13.0f) {
 			std::pair<Point2D, Point2D> pair;
 
@@ -459,6 +460,7 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 		}
 	}
 
+	// if no good pair, then return any location
 	if (resource_base_pair.empty()) {
 		rx = GetRandomScalar();
 		ry = GetRandomScalar();
@@ -467,15 +469,14 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 		return build_location;
 	}
 
-
-	while (!IsGoodLocation) {
+	// stay in while until good building location is found
+	while (true) {
 		bool IsBad = false;
 		rx = GetRandomScalar();
 		ry = GetRandomScalar();
 		build_location = Point2D(unit_to_build->pos.x + rx * 15.0f, unit_to_build->pos.y + ry * 15.0f);
 
-
-		return build_location;
+		// for each resource base pair, if angles >= 90 then reselect point
 		for (auto r_b : resource_base_pair) {
 			Point2D vector_a, vector_b;
 			float dot_product, n_n, cos;
