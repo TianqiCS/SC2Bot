@@ -58,12 +58,12 @@ int main(int argc, char* argv[])
 	}
 	coordinator.SetWindowSize(1080, 720);
 	coordinator.SetStepSize(100); // speed
-	coordinator.SetRealtime(true);
+	coordinator.SetRealtime(false);
 	coordinator.SetMultithreaded(true);
 	coordinator.SetParticipants({
 		CreateParticipant(sc2::Race::Terran, &bot),
 		//sc2::PlayerSetup(sc2::PlayerType::Observer,Util::GetRaceFromString(enemyRaceString)),
-		CreateComputer(sc2::Race::Random, VeryHard)
+		CreateComputer(sc2::Race::Random, Easy)
 		});
 	// Start the game.
 	coordinator.LaunchStarcraft();

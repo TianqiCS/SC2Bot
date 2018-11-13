@@ -7,6 +7,29 @@
 
 using namespace sc2;
 
+Point2D Feeder::GetGoodBuildingLocation() {
+	const ObservationInterface* observation = Observation();
+	float rx, ry;
+	Point2D build_location;
+	bool IsGoodLocation = false;
+
+	Units rocks = observation->GetUnits(
+		[](const Unit& unit) {
+		return unit.unit_type == 472;
+	}
+	);
+
+	rx = GetRandomScalar();
+	ry = GetRandomScalar();
+
+	while (!IsGoodLocation) {
+		build_location = Point2D(staging_location_.x + rx * 15, staging_location_.y + ry * 15);
+
+	}
+
+	return Point2D();
+	
+}
 
 void Feeder::GetAllEnemyBaseLocation(std::vector<Point2D> &rtv) {
 	const ObservationInterface* observation = Observation();
