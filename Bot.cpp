@@ -436,7 +436,6 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 
 		min_distance = Distance2D(closest_base, Point2D(resource->pos.x, resource->pos.y));
 
-		std::cerr << "min_distance: " << min_distance << std::endl;
 		for (auto base : command_centers) {
 			float new_d, new_x, new_y;
 
