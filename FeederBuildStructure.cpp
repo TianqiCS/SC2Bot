@@ -151,7 +151,7 @@ bool Feeder::TryBuildResearch()
 	factory_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size();
 
 	if (barracks_num >= 3 && !CountUnitType(observation, UNIT_TYPEID::TERRAN_ENGINEERINGBAY)) {
-		BuildStructure(ABILITY_ID::BUILD_ENGINEERINGBAY, 1, UNIT_TYPEID::TERRAN_SCV);
+		TryBuildStructure(ABILITY_ID::BUILD_ENGINEERINGBAY, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
 	//	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
 	//		observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size() > 0 &&
