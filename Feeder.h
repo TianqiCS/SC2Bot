@@ -113,6 +113,8 @@ class Feeder : public Bot
 {
 public:
 	Feeder();
+
+	// events
 	virtual void OnGameStart() override;
 	virtual void OnStep() override;
     virtual void OnUnitIdle(const sc2::Unit *unit) override;
@@ -121,10 +123,7 @@ public:
     virtual void OnUnitEnterVision(const sc2::Unit *unit) override;
 	virtual void OnBuildingConstructionComplete(const sc2::Unit *unit) override;
 	
-	// scout function
-
-	// buildings
-	void Observate();
+	// build structures
 	void BuildStructures();
 	bool TryBuildSupplyDepot();
 	bool TryBuildTrainingFacilities();
@@ -133,8 +132,6 @@ public:
 	bool BuildRefinery();
 	bool TryBuildResearch();
 	
-	// research
-	void ManageUpgrades();
 
 	// build units
 	void BuildArmy();
@@ -143,17 +140,22 @@ public:
 	bool TryBuildMarauder();
 	bool TrybuildMedivac();
 
-	// actions
+	// manage && research
 	void ManageArmy();
+	void ManageUpgrades();
+
 	void ScoutWithMarines();
 	void tryScoutWithSCV();
 	void ScoutWithSCV();
-	void AttackWithAllUnits();
 
 	// utilitys
 	void GetRallyPointOnRocks();
 	void GetAllEnemyBaseLocation(std::vector<Point2D> &rtv);
 	void GetNeareastBaseLocation(Point2D &point);
+
+	// demo || unsorted
+	void AttackWithAllUnits();
+	void Observate();
 
 private:
 	// different typenames of one type unit
