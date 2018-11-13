@@ -382,6 +382,132 @@ bool Bot::TryBuildStructure(AbilityID ability_type_for_structure, UnitTypeID uni
 
 }
 
+
+Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
+	const ObservationInterface* observation = Observation();
+	float rx, ry;
+	Point2D build_location;
+	bool IsGoodLocation = false;
+	std::vector<std::pair<Point2D, Point2D> > resource_base_pair;
+
+	Units rocks = observation->GetUnits(
+		[](const Unit& unit) {
+		return unit.unit_type == 472;
+	}
+	);
+
+	Units resources = observation->GetUnits(
+		[](const Unit& unit) {
+		return unit.unit_type == UNIT_TYPEID::NEUTRAL_MINERALFIELD || unit.unit_type == UNIT_TYPEID::NEUTRAL_MINERALFIELD750 ||
+			unit.unit_type == UNIT_TYPEID::NEUTRAL_RICHMINERALFIELD || unit.unit_type == UNIT_TYPEID::NEUTRAL_RICHMINERALFIELD750 ||
+			unit.unit_type == UNIT_TYPEID::NEUTRAL_PURIFIERMINERALFIELD || unit.unit_type == UNIT_TYPEID::NEUTRAL_PURIFIERMINERALFIELD750 ||
+			unit.unit_type == UNIT_TYPEID::NEUTRAL_PURIFIERRICHMINERALFIELD || unit.unit_type == UNIT_TYPEID::NEUTRAL_PURIFIERRICHMINERALFIELD750 ||
+			unit.unit_type == UNIT_TYPEID::NEUTRAL_LABMINERALFIELD || unit.unit_type == UNIT_TYPEID::NEUTRAL_LABMINERALFIELD750 ||
+			unit.unit_type == UNIT_TYPEID::NEUTRAL_BATTLESTATIONMINERALFIELD || unit.unit_type == UNIT_TYPEID::NEUTRAL_BATTLESTATIONMINERALFIELD750 ||
+			unit.unit_type == UNIT_TYPEID::NEUTRAL_VESPENEGEYSER || unit.unit_type == UNIT_TYPEID::NEUTRAL_PROTOSSVESPENEGEYSER ||
+			unit.unit_type == UNIT_TYPEID::NEUTRAL_SPACEPLATFORMGEYSER || unit.unit_type == UNIT_TYPEID::NEUTRAL_PURIFIERVESPENEGEYSER ||
+			unit.unit_type == UNIT_TYPEID::NEUTRAL_SHAKURASVESPENEGEYSER || unit.unit_type == UNIT_TYPEID::NEUTRAL_RICHVESPENEGEYSER;
+	}
+	);
+
+	Units command_centers = observation->GetUnits(
+		[](const Unit& unit) {
+		return (unit.unit_type == UNIT_TYPEID::TERRAN_COMMANDCENTER || unit.unit_type == UNIT_TYPEID::TERRAN_PLANETARYFORTRESS ||
+			unit.unit_type == UNIT_TYPEID::TERRAN_ORBITALCOMMAND) && unit.alliance == Unit::Alliance::Self;
+	}
+	);
+
+	if (command_centers.empty()) {
+		std::cerr << "fail to find command center" << std::endl;
+		rx = GetRandomScalar();
+		ry = GetRandomScalar();
+		build_location = Point2D(unit_to_build->pos.x + rx * 15.0f, unit_to_build->pos.y + ry * 15.0f);
+
+		return build_location;
+
+	}
+
+	for (auto resource : resources) {
+		Point2D closest_base;
+		float min_distance;
+
+		closest_base.x = command_centers.front()->pos.x;
+		closest_base.y = command_centers.front()->pos.y;
+
+		min_distance = Distance2D(closest_base, Point2D(resource->pos.x, resource->pos.y));
+
+		std::cerr << "min_distance: " << min_distance << std::endl;
+		for (auto base : command_centers) {
+			float new_d, new_x, new_y;
+
+			new_x = base->pos.x;
+			new_y = base->pos.y;
+			new_d = Distance2D(Point2D(new_x, new_y), Point2D(resource->pos.x, resource->pos.y));
+
+			if (new_d < min_distance) {
+				min_distance = new_d;
+				closest_base.x = new_x;
+				closest_base.y = new_y;
+
+			}
+		}
+		if (min_distance < 13.0f) {
+			std::pair<Point2D, Point2D> pair;
+
+			pair.first = Point2D(resource->pos.x, resource->pos.y);
+			pair.second = closest_base;
+			resource_base_pair.push_back(pair);
+		}
+	}
+
+	if (resource_base_pair.empty()) {
+		rx = GetRandomScalar();
+		ry = GetRandomScalar();
+		build_location = Point2D(unit_to_build->pos.x + rx * 15.0f, unit_to_build->pos.y + ry * 15.0f);
+
+		return build_location;
+	}
+
+
+	while (!IsGoodLocation) {
+		bool IsBad = false;
+		rx = GetRandomScalar();
+		ry = GetRandomScalar();
+		build_location = Point2D(unit_to_build->pos.x + rx * 15.0f, unit_to_build->pos.y + ry * 15.0f);
+
+
+		return build_location;
+		for (auto r_b : resource_base_pair) {
+			Point2D vector_a, vector_b;
+			float dot_product, n_n, cos;
+
+			vector_a.x = build_location.x - r_b.second.x;
+			vector_a.y = build_location.y - r_b.second.y;
+			vector_b.x = build_location.x - r_b.first.x;
+			vector_b.y = build_location.y - r_b.first.y;
+
+			dot_product = Dot2D(vector_a, vector_b);
+			n_n = sqrt(pow(vector_a.x, 2.0f) + pow(vector_a.y, 2.0f)) * sqrt(pow(vector_b.x, 2.0f) + pow(vector_b.y, 2.0f));
+			cos = dot_product / n_n;
+
+			if (cos < 0) {
+				IsBad = true;
+				break;
+			}
+		}
+
+		if (!IsBad) {
+			return build_location;
+		}
+
+	}
+
+	return Point2D();
+
+}
+
+
+
 //**Try to build structure(s)
 bool Bot::TryBuildStructure(ABILITY_ID ability_type_for_structure, size_t count = 1, UNIT_TYPEID unit_type = UNIT_TYPEID::TERRAN_SCV) {
 	const ObservationInterface *observation = Observation();
@@ -407,8 +533,12 @@ bool Bot::TryBuildStructure(ABILITY_ID ability_type_for_structure, size_t count 
 	float rx = GetRandomScalar();
 	float ry = GetRandomScalar();
 
-	Actions()->UnitCommand(unit_to_build, ability_type_for_structure,
+	/*
+		Actions()->UnitCommand(unit_to_build, ability_type_for_structure,
 		Point2D(unit_to_build->pos.x + rx * 15.0f, unit_to_build->pos.y + ry * 15.0f));
+	*/
+	Actions()->UnitCommand(unit_to_build, ability_type_for_structure,
+		GetGoodBuildingLocation(unit_to_build));
 
 	return true;
 }

@@ -48,9 +48,7 @@ bool Feeder::TryBuildSupplyDepot() {
 	}
 
 	// Try and build a supply depot. Find a random SCV and give it the order.
-	float rx = GetRandomScalar();
-	float ry = GetRandomScalar();
-	Point2D build_location = Point2D(staging_location_.x + rx * 15, staging_location_.y + ry * 15);
+	Point2D build_location = GetGoodBuildingLocation();
 	return TryBuildStructure(ABILITY_ID::BUILD_SUPPLYDEPOT, 1, UNIT_TYPEID::TERRAN_SCV);
 }
 
@@ -145,7 +143,6 @@ bool Feeder::BuildRefinery() {
 	return false;
 }
 
-
 bool Feeder::TryBuildResearch()
 {
 	const ObservationInterface* observation = Observation();
@@ -154,7 +151,7 @@ bool Feeder::TryBuildResearch()
 	factory_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size();
 
 	if (barracks_num >= 3 && !CountUnitType(observation, UNIT_TYPEID::TERRAN_ENGINEERINGBAY)) {
-		TryBuildStructure(ABILITY_ID::BUILD_ENGINEERINGBAY, 1, UNIT_TYPEID::TERRAN_SCV);
+		BuildStructure(ABILITY_ID::BUILD_ENGINEERINGBAY, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
 	//	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
 	//		observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size() > 0 &&

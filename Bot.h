@@ -78,6 +78,8 @@ public:
 	// To ensure that we do not over or under saturate any base.
 	void ManageWorkers(UNIT_TYPEID worker_type, AbilityID worker_gather_command, UNIT_TYPEID vespene_building_type);
 
+	Point2D GetGoodBuildingLocation(const Unit *unit_to_build);
+
 	virtual void OnNuclearLaunchDetected() final;
 
 	uint32_t current_game_loop_ = 0;

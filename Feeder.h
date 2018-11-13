@@ -158,6 +158,7 @@ public:
 	// demo || unsorted
 	void AttackWithAllUnits();
 	void Observate();
+	bool BuildStructure(ABILITY_ID ability_type_for_structure, size_t count = 1, UNIT_TYPEID unit_type = UNIT_TYPEID::TERRAN_SCV);
 
 private:
 	// different typenames of one type unit
