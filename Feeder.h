@@ -109,12 +109,11 @@ struct IsStructure {
 	const ObservationInterface* observation_;
 };
 
-
 class Feeder : public Bot
 {
 public:
 	Feeder();
-	//virtual void OnGameStart() override;
+	virtual void OnGameStart() override;
 	virtual void OnStep() override;
     virtual void OnUnitIdle(const sc2::Unit *unit) override;
 	virtual void OnUnitDestroyed(const sc2::Unit *unit) override;
@@ -137,23 +136,22 @@ public:
 	// research
 	void ManageUpgrades();
 
-	void ManageArmy();
-
 	// build units
 	void BuildArmy();
 	bool TryBuildSCV();
 	bool TryBuildMarine();
 	bool TryBuildMarauder();
-
 	bool TrybuildMedivac();
 
 	// actions
+	void ManageArmy();
 	void ScoutWithMarines();
 	void tryScoutWithSCV();
 	void ScoutWithSCV();
 	void AttackWithAllUnits();
 
 	// utilitys
+	void GetRallyPointOnRocks();
 	void GetAllEnemyBaseLocation(std::vector<Point2D> &rtv);
 	void GetNeareastBaseLocation(Point2D &point);
 
@@ -188,8 +186,10 @@ private:
 	size_t minerals;
 	size_t gas;
 
-	//  scout results
+	// game stats results
+	Point2D my_base_point;
 	Point2D enemy_base_point;
+	Point2D rally_point;
 	GameInfo game_info_;
 	bool scv_scouting;
 

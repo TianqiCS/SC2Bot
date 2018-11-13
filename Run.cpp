@@ -9,7 +9,7 @@
 
 #ifdef DEBUG
 
-int main(int argc, char* argv[])
+/*int main(int argc, char* argv[])
 {
 	/*
 	Feeder bot;
@@ -38,15 +38,15 @@ int main(int argc, char* argv[])
 	while (coordinator.Update())
 	{
 	}
-	*/
+	
 	RunBot(argc, argv, new Feeder(), sc2::Race::Terran);
 	return 0;
 }
-
+*/
 // This main function is for quick local demo only
 // please DO NOT EDIT/DELETE
 
-/*
+
 int main(int argc, char* argv[])
 {
 	Feeder bot;
@@ -56,9 +56,9 @@ int main(int argc, char* argv[])
 		std::cout << "Unable to find or parse settings." << std::endl;
 		return 1;
 	}
-	coordinator.SetWindowSize(1920, 1080);
+	coordinator.SetWindowSize(1080, 720);
 	coordinator.SetStepSize(100); // speed
-	coordinator.SetRealtime(false);
+	coordinator.SetRealtime(true);
 	coordinator.SetMultithreaded(true);
 	coordinator.SetParticipants({
 		CreateParticipant(sc2::Race::Terran, &bot),
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-*/
+
 #else
 
 int main(int argc, char* argv[])

@@ -13,25 +13,35 @@ Feeder::Feeder() {
 	enemy_base_point.x = 0.0f;
 	enemy_base_point.y = 0.0f;
 
+	rally_point.x = 0.0f;
+	rally_point.y = 0.0f;
 	scv_scouting = false;
 }
 
-//void Feeder::OnGameStart(){}
+void Feeder::OnGameStart(){
+	// call a method to calculate rally point depending on undestructible rock
+	// 
+	// Actions()->UnitCommand(const Unit* unit, AbilityID ability, const Point2D& point, bool queued_command = false)
+	GetRallyPointOnRocks();
+
+}
 // this is comment
 void Feeder::OnStep() {
+
 	//Observate();
 	TryBuildSCV();
 	BuildStructures();
 	BuildArmy();
 	ManageArmy();
 	tryScoutWithSCV();
-	
+
 }
 
 void Feeder::OnUnitDestroyed(const sc2::Unit *unit) {
 	if (unit->alliance == Unit::Alliance::Self) {
 	}
 }
+
 void Feeder::OnUnitEnterVision(const sc2::Unit *unit) {
 	if (scv_scouting) {
 		switch (unit->unit_type.ToType())
@@ -57,6 +67,8 @@ void Feeder::OnBuildingConstructionComplete(const sc2::Unit* unit) {
 	switch (unit->unit_type.ToType()) {
 	case UNIT_TYPEID::TERRAN_BARRACKS: {
 		// set rally point
+		Actions()->UnitCommand(unit, ABILITY_ID::RALLY_UNITS, rally_point, false);
+
 		break;
 	}
 	default:
@@ -67,7 +79,6 @@ void Feeder::OnBuildingConstructionComplete(const sc2::Unit* unit) {
 void Feeder::OnUnitCreated(const sc2::Unit *unit) {
 	
 }
-
 
 void Feeder::OnUnitIdle(const sc2::Unit *unit) {
 	switch (unit->unit_type.ToType()) {
@@ -458,8 +469,20 @@ bool Feeder::TrybuildMedivac() {
 	return TryBuildUnit(ABILITY_ID::TRAIN_MEDIVAC, UNIT_TYPEID::TERRAN_STARPORT);
 }
 
+void Feeder::tryScoutWithSCV() {
+	if (enemy_base_point.x == 0.0f && enemy_base_point.y == 0.0f) { // not found enemy base
+		ScoutWithSCV();
+	}
+	else { // found enemy base
+		ManageArmy();
+		//AttackWithAllUnits();
+	}
+
+}
+
 // TODO KNOWN BUG: in some cases, scv would not be sent to scout, 
 // probable cause: conflit between Scouting method and (BuildStructure || onIdle)
+
 void Feeder::ScoutWithSCV() {
 	const ObservationInterface* observation = Observation();
 
@@ -493,6 +516,8 @@ void Feeder::ScoutWithSCV() {
 		for (Point2D &point : start_loactions) {
 			Actions()->UnitCommand(unit, ABILITY_ID::SMART, point, true); // queue orders
 		}
+
+		my_base_point = start_loactions.back();
 
 		break;
 	}
@@ -629,7 +654,7 @@ void Feeder::GetNeareastBaseLocation(Point2D &point) {
 	min_point = locations.front();
 	min_distance = Distance2D(point, min_point);
 	for (const Point2D &loca : locations) {
-		float temp = Distance2D(loca, loca);
+		float temp = Distance2D(loca, loca); // TODO what happened here? it looks wrong
 
 		if (temp < min_distance) {
 			min_distance = temp;
@@ -729,6 +754,10 @@ void Feeder::ManageArmy() {
 	Units enemy_units = observation->GetUnits(Unit::Alliance::Enemy);
 
 	Units army = observation->GetUnits(Unit::Alliance::Self, IsArmy(observation));
+
+	if (army.empty()) {
+		return;
+	}
 	int wait_til_supply = 30;
 
 	Units nuke = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_NUKE));
@@ -910,13 +939,47 @@ void Feeder::ManageArmy() {
 	}
 }
 
-void Feeder::tryScoutWithSCV() {
-	if (enemy_base_point.x == 0.0f && enemy_base_point.y == 0.0f) { // not found enemy base
-		ScoutWithSCV();
+void Feeder::GetRallyPointOnRocks() {
+	// find closest rocks by gameinfo.startlocation & getallunits // RALLY_UNITS, TERRAN_BARRACKS, 
+	const ObservationInterface* observation = Observation();
+	float min_distance;
+	Point2D min_point, temp_p;
+	Point3D start_pos = observation->GetStartLocation();
+	float x_, y_;
+	float temp_d;
+
+	// TODO getUnits bug, unknown types for neutral rocks
+	Units rocks = observation->GetUnits(
+		[](const Unit& unit) {
+			return unit.unit_type == 472;
+		}
+	);
+
+	if (rocks.empty()) {
+		std::cerr << "Error finding rocks" << std::endl;
+		return;
 	}
-	else { // found enemy base
-		ManageArmy();
-		//AttackWithAllUnits();
+
+	// init before loop
+	min_point = Point2D(rocks.front()->pos.x, rocks.front()->pos.y);
+	min_distance = Distance2D(min_point, start_pos);
+
+	// TODO try replacing auto
+	for (auto rock : rocks) {
+		temp_p.x = rock->pos.x; 
+		temp_p.y = rock->pos.y;
+		temp_d = Distance2D(temp_p, start_pos);
+
+		if (temp_d < min_distance) {
+			min_point = temp_p;
+			min_distance = temp_d;
+		}
 	}
+
+	x_ = (min_point.x - start_pos.x) / 8;
+	y_ = (min_point.y - start_pos.y) / 8;
+
+
+	rally_point = Point2D(min_point.x - x_, min_point.y - y_);
 
 }
