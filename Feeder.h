@@ -149,6 +149,7 @@ public:
 	void ScoutWithSCV();
 
 	// utilitys
+
 	void GetRallyPointOnRocks();
 	void GetAllEnemyBaseLocation(std::vector<Point2D> &rtv);
 	void GetNeareastBaseLocation(Point2D &point);
