@@ -68,9 +68,17 @@ void Feeder::OnBuildingConstructionComplete(const sc2::Unit* unit) {
 	case UNIT_TYPEID::TERRAN_BARRACKS: {
 		// set rally point
 		Actions()->UnitCommand(unit, ABILITY_ID::RALLY_UNITS, rally_point, false);
-
 		break;
 	}
+	case UNIT_TYPEID::TERRAN_FACTORY: {
+		Actions()->UnitCommand(unit, ABILITY_ID::RALLY_UNITS, rally_point, false);
+		break;
+	}
+	case UNIT_TYPEID::TERRAN_STARPORT: {
+		Actions()->UnitCommand(unit, ABILITY_ID::RALLY_UNITS, rally_point, false);
+		break;
+	}
+
 	default:
 		break;
 	}
@@ -976,10 +984,27 @@ void Feeder::GetRallyPointOnRocks() {
 		}
 	}
 
-	x_ = (min_point.x - start_pos.x) / 8;
-	y_ = (min_point.y - start_pos.y) / 8;
+	x_ = (min_point.x - start_pos.x) / 4.5f;
+	y_ = (min_point.y - start_pos.y) / 4.5f;
+
+	if (y_ > 0 && (abs(x_) < abs(y_))) { // bottom left
+		x_ = min_point.x - x_ - 2;
+		y_ = min_point.y - y_;
+	}
+	else if (y_ < 0 && (abs(x_) < abs(y_))) { // top right
+		x_ = min_point.x - x_ + 2;
+		y_ = min_point.y - y_;
+	}
+	else if (x_ < 0 && (abs(x_) > abs(y_))) { // top left
+		x_ = min_point.x - x_;
+		y_ = min_point.y - y_ - 2;
+	}
+	else if (x_ > 0 && (abs(x_) > abs(y_))) { // bottom right
+		x_ = min_point.x - x_;
+		y_ = min_point.y - y_ + 2;
+	}
 
 
-	rally_point = Point2D(min_point.x - x_, min_point.y - y_);
+	rally_point = Point2D(x_, y_);
 
 }
