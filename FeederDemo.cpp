@@ -83,32 +83,3 @@ void Feeder::AttackWithAllUnits() {
 	return true;
 	*/
 }
-
-bool Feeder::BuildStructure(ABILITY_ID ability_type_for_structure, size_t count, UNIT_TYPEID unit_type) {
-	const ObservationInterface *observation = Observation();
-
-	// If a unit already is building a supply structure of this type, do nothing.
-	// Also get an scv to build the structure.
-	const Unit *unit_to_build = nullptr;
-	Units units = observation->GetUnits(Unit::Alliance::Self);
-	for (const auto &unit : units) {
-		for (const auto &order : unit->orders) {
-			if (order.ability_id == ability_type_for_structure) {
-				count--;
-				if (!count) {
-					return false;
-				}
-			}
-		}
-
-		if (unit->unit_type == unit_type) {
-			unit_to_build = unit;
-		}
-	}
-
-	Point2D point = GetGoodBuildingLocation();
-
-	Actions()->UnitCommand(unit_to_build, ability_type_for_structure, point);
-
-	return true;
-}
