@@ -8,7 +8,6 @@
 using namespace sc2;
 
 void Feeder::ManageArmy() {
-
 	const ObservationInterface* observation = Observation();
 
 	Units enemy_units = observation->GetUnits(Unit::Alliance::Enemy);
