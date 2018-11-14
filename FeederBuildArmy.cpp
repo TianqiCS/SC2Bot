@@ -7,7 +7,6 @@
 
 using namespace sc2;
 
-
 void Feeder::BuildArmy() {
 	const ObservationInterface* observation = Observation();
 	Units bases = observation->GetUnits(Unit::Self, IsTownHall());

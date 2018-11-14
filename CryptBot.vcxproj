@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -133,9 +133,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bot.cpp" />
-    <ClCompile Include="Feeder.cpp" />
+    <ClCompile Include="FeederBuildArmy.cpp" />
+    <ClCompile Include="FeederBuildSpecifiUnits.cpp" />
+    <ClCompile Include="FeederBuildStructure.cpp" />
+    <ClCompile Include="FeederDemo.cpp" />
+    <ClCompile Include="FeederEvents.cpp" />
+    <ClCompile Include="FeederManageArmy.cpp" />
+    <ClCompile Include="FeederManageUpgrade.cpp" />
+    <ClCompile Include="FeederScout.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Run.cpp" />
+    <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bot.h" />
