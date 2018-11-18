@@ -15,6 +15,22 @@
             "Map": "CactusValleyLE.SC2Map",
             "Result": "Player1Crash",
             "GameTime": 7310
+        },
+        {
+            "Bot1": "HumanTerran",
+            "Bot2": "Feeder",
+            "Winner": "Feeder",
+            "Map": "CactusValleyLE.SC2Map",
+            "Result": "Player1Crash",
+            "GameTime": 0
+        },
+        {
+            "Bot1": "Feeder",
+            "Bot2": "pysc2-ladderbot",
+            "Winner": "Feeder",
+            "Map": "CactusValleyLE.SC2Map",
+            "Result": "Player2Crash",
+            "GameTime": -1993681952
         }
     ]
 }
