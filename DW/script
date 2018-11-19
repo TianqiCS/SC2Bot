@@ -1,0 +1,15 @@
+#!/bin/bash
+make clean_out
+mkdir output
+for bp in 0 1 2;
+do
+	for rp in 0 1 2;
+	do
+		for m in 20 50 100 300;
+		do
+			for i in {1..100}; 
+			do ./simul 700 700  0 0 $m $m $rp $bp 1 >> output/'t'$m'm'$m'bp'$bp'rp'$rp.txt;
+			done;
+		done;
+	done;
+done
