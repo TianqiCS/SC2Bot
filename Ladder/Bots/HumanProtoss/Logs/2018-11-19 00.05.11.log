@@ -1,0 +1,41 @@
+[00:05:11 INFO] --> Connected
+[00:05:26 INFO] Human bot playing: Protoss
+[00:05:26 INFO] --------------------------------------
+[00:05:26 INFO] Map: Cactus Valley LE (Void)
+[00:05:26 INFO] --------------------------------------
+[00:05:29 INFO] [Action] AbilityID: 1006
+[00:06:50 INFO] ResponseObservation is null! The application will terminate.
+[00:06:50 INFO] System.AggregateException: One or more errors occurred. ---> System.InvalidOperationException: Cannot read keys when either application does not have a console or when console input has been redirected from a file. Try Console.Read.
+   at System.Console.ReadKey(Boolean intercept)
+   at Bot.Controller.Pause()
+   at Bot.Controller.OpenFrame()
+   at Bot.RaxBot.OnFrame()
+   at Bot.GameConnection.<Run>d__17.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Bot.GameConnection.<RunLadder>d__19.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Bot.GameConnection.<RunLadder>d__20.MoveNext()
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   at Bot.Program.Main(String[] args)
+---> (Inner Exception #0) System.InvalidOperationException: Cannot read keys when either application does not have a console or when console input has been redirected from a file. Try Console.Read.
+   at System.Console.ReadKey(Boolean intercept)
+   at Bot.Controller.Pause()
+   at Bot.Controller.OpenFrame()
+   at Bot.RaxBot.OnFrame()
+   at Bot.GameConnection.<Run>d__17.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Bot.GameConnection.<RunLadder>d__19.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Bot.GameConnection.<RunLadder>d__20.MoveNext()<---
+
+[00:06:50 INFO] Terminated.

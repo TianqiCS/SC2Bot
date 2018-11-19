@@ -13,6 +13,7 @@ void Feeder::OnGameStart() {
 	// 
 	// Actions()->UnitCommand(const Unit* unit, AbilityID ability, const Point2D& point, bool queued_command = false)
 	GetRallyPointOnRocks();
+	std::cout << "start!" << std::endl;
 
 }
 // this is comment
@@ -89,3 +90,14 @@ void Feeder::OnUnitIdle(const sc2::Unit *unit) {
 	}
 }
 
+void Feeder::OnGameEnd() {
+	// result file
+	//FILE * pFile;
+	//pFile = fopen_s("data.txt", "w");
+	//freopen("data.txt", "w", stdout);
+	//std::cout << "write in file";
+
+	std::cout << "Game Ended for: " << std::to_string(Control()->Proto().GetAssignedPort()) << std::endl;
+	//fprintf(pFile, "%s", std::to_string(Control()->Proto().GetAssignedPort()));
+	return;
+}

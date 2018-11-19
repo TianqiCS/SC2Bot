@@ -49,6 +49,10 @@
 
 int main(int argc, char* argv[])
 {
+	// result file
+	//FILE * pFile;
+	//pFile = fopen("data.txt", "w");
+
 	Feeder bot;
 	sc2::Coordinator coordinator;
 	if (!coordinator.LoadSettings(argc, argv))
@@ -77,6 +81,7 @@ int main(int argc, char* argv[])
 	}
 
 	//RunBot(argc, argv, new Feeder(), sc2::Race::Terran);
+	//fclose(pFile);
 	return 0;
 }
 
