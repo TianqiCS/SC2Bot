@@ -140,6 +140,7 @@
     <ClCompile Include="FeederEvents.cpp" />
     <ClCompile Include="FeederManageArmy.cpp" />
     <ClCompile Include="FeederManageUpgrade.cpp" />
+    <ClCompile Include="FeederMicroControl.cpp" />
     <ClCompile Include="FeederScout.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Run.cpp" />

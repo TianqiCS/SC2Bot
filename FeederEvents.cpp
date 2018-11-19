@@ -14,21 +14,34 @@ void Feeder::OnGameStart() {
 	// Actions()->UnitCommand(const Unit* unit, AbilityID ability, const Point2D& point, bool queued_command = false)
 	GetRallyPointOnRocks();
 	std::cout << "start!" << std::endl;
+	move_back_ = false;
+	targeted_enemy_ = 0;
+
 
 }
 // this is comment
 void Feeder::OnStep() {
 
 	//Observate();
+
+	microControl();
+	/*
 	TryBuildSCV();
 	BuildStructures();
 	BuildArmy();
 	ManageArmy();
 	tryScoutWithSCV();
 
+	*/
+	
 }
 
 void Feeder::OnUnitDestroyed(const sc2::Unit *unit) {
+	resetMicroControl(unit);
+	if (unit->alliance == Unit::Alliance::Enemy) {
+		
+	}
+
 	if (unit->alliance == Unit::Alliance::Self) {
 	}
 }

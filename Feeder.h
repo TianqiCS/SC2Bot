@@ -123,7 +123,7 @@ public:
     virtual void OnUnitEnterVision(const sc2::Unit *unit) override;
 	virtual void OnBuildingConstructionComplete(const sc2::Unit *unit) override;
 	virtual void OnGameEnd() override;
-	
+
 	// build structures
 	void BuildStructures();
 	bool TryBuildSupplyDepot();
@@ -156,9 +156,26 @@ public:
 	void GetNeareastBaseLocation(Point2D &point);
 	Point2D GetGoodBuildingLocation();
 
+	// micro control
+	void microControl();
+	void resetMicroControl(const Unit* unit);
+	bool UpdatePosition(std::set<UNIT_TYPEID> unit_type_container, Unit::Alliance alliace, Point2D& position);
+	bool Feeder::UpdateEnemyPosition(std::set<UNIT_TYPEID> unit_type_container, Unit::Alliance enemy, Point2D& position);
+	bool GetNearestEnemy(std::set<UNIT_TYPEID> unit_filter, const Point2D& from);
+	const Unit* targeted_enemy_; //temp
+	bool move_back_;//temp
+	Point2D backup_target_;//temp
+	Point2D backup_start_;//temp
+	std::set<UNIT_TYPEID> unit_type_container;
+	std::set<UNIT_TYPEID> unit_filter;
+
+
+
 	// demo || unsorted
 	void AttackWithAllUnits();
 	void Observate();
+
+
 
 private:
 	// different typenames of one type unit

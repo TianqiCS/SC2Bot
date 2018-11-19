@@ -51,8 +51,8 @@
 int main(int argc, char* argv[])
 {
 	// result file
-	//FILE * pFile;
-	//pFile = fopen("data.txt", "w");
+//FILE * pFile;
+//pFile = fopen("data.txt", "w");
 
 	Feeder bot;
 	sc2::Coordinator coordinator;

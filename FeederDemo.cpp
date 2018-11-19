@@ -16,6 +16,14 @@ Feeder::Feeder() {
 	rally_point.x = 0.0f;
 	rally_point.y = 0.0f;
 	scv_scouting = false;
+
+	unit_type_container.insert(UNIT_TYPEID::TERRAN_MARAUDER);
+	unit_type_container.insert(UNIT_TYPEID::TERRAN_MARINE);
+	unit_type_container.insert(UNIT_TYPEID::TERRAN_MEDIVAC);
+	unit_type_container.insert(UNIT_TYPEID::TERRAN_RAVEN);
+	unit_type_container.insert(UNIT_TYPEID::TERRAN_VIKINGASSAULT);
+	unit_type_container.insert(UNIT_TYPEID::TERRAN_VIKINGFIGHTER);
+
 }
 
 void Feeder::Observate() {  // not recommended to use
@@ -65,6 +73,7 @@ bool Feeder::TryBuildExpansionCom() {
 }
 
 // pre-conditon: enemy-location is found
+
 void Feeder::AttackWithAllUnits() {
 	const ObservationInterface* observation = Observation();
 	Units units = Observation()->GetUnits(Unit::Alliance::Self);
