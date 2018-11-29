@@ -25,14 +25,14 @@ void Feeder::OnStep() {
 	//Observate();
 
 	microControl();
-	/*
+	
 	TryBuildSCV();
 	BuildStructures();
 	BuildArmy();
 	ManageArmy();
 	tryScoutWithSCV();
 
-	*/
+	
 	
 }
 
@@ -109,8 +109,14 @@ void Feeder::OnGameEnd() {
 	//pFile = fopen_s("data.txt", "w");
 	//freopen("data.txt", "w", stdout);
 	//std::cout << "write in file";
-
+	const ObservationInterface* observation = Observation();
 	std::cout << "Game Ended for: " << std::to_string(Control()->Proto().GetAssignedPort()) << std::endl;
+	if (observation->GetFoodCap()==0) {
+		std::cout << "we lost" << std::endl;
+	}
+	else {
+		std::cout << "we win" << std::endl;
+	}
 	//fprintf(pFile, "%s", std::to_string(Control()->Proto().GetAssignedPort()));
 	return;
 }

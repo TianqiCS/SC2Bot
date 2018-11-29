@@ -62,7 +62,8 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 	coordinator.SetWindowSize(1080, 720);
-	coordinator.SetStepSize(100); // speed
+	//coordinator.SetStepSize(100); // speed
+	coordinator.SetStepSize(1000); // speed
 	coordinator.SetRealtime(false);
 	coordinator.SetMultithreaded(true);
 	coordinator.SetParticipants({
