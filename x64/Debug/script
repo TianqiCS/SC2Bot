@@ -1,0 +1,11 @@
+#!/bin/bash
+for i in {1..100}; 
+do ./Feeder >> data.txt;
+done;
+
+# run $bash script
+# change the speed before running
+# change the value for %d to change the number of runs {1..%d}
+# the output including win/lose is in the data.txt file
+# empty the data.txt file before running script
+# otherwise the content will append into the file
