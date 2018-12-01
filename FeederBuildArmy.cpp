@@ -36,22 +36,10 @@ void Feeder::BuildArmy() {
 		}
 	}
 
-	//std::cerr << " build army " << std::endl;
-
-	if (barracks.empty())
-	{
-		std::cerr << " no barracks " << std::endl;
-	}
-	else{
-		std::cerr << barracks.size() << std::endl;
-	}
 
 	for (const auto& barrack : barracks) {
 
-		std::cerr << " there are barracks " << std::endl;
-
 		if (!barrack->orders.empty() || barrack->build_progress != 1) {
-			std::cerr << " barracks could not build" << std::endl;
 			continue;
 		}
 
@@ -70,7 +58,6 @@ void Feeder::BuildArmy() {
 				//TryBuildAddOn(ABILITY_ID::BUILD_REACTOR_BARRACKS, barrack->tag);
 			}
 		}
-		std::cerr << " going to build " << std::endl;
 
 		TryBuildMarauder();
 		TryBuildMarine();
