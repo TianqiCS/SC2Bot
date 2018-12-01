@@ -24,9 +24,10 @@ void Feeder::OnStep() {
 
 	//Observate();
 
-	microControl();
+	//microControl();
 	
 	TryBuildSCV();
+	std::cerr << "running in step" << std::endl;
 	BuildStructures();
 	BuildArmy();
 	ManageArmy();

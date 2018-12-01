@@ -13,7 +13,7 @@ void Feeder::tryScoutWithSCV() {
 		ScoutWithSCV();
 	}
 	else { // found enemy base
-		ManageArmy();
+		//ManageArmy();
 		//AttackWithAllUnits();
 	}
 

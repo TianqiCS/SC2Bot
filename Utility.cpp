@@ -60,7 +60,7 @@ Point2D Feeder::GetGoodBuildingLocation() {
 
 		min_distance = Distance2D(closest_base, Point2D(resource->pos.x, resource->pos.y));
 
-		std::cerr << "min_distance: " << min_distance << std::endl;
+		// std::cerr << "min_distance: " << min_distance << std::endl;
 		for (auto base : command_centers) {
 			float new_d, new_x, new_y;
 

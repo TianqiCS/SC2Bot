@@ -536,9 +536,13 @@ bool Bot::TryBuildStructure(ABILITY_ID ability_type_for_structure, size_t count 
 	/*
 		Actions()->UnitCommand(unit_to_build, ability_type_for_structure,
 		Point2D(unit_to_build->pos.x + rx * 15.0f, unit_to_build->pos.y + ry * 15.0f));
+
 	*/
 	Actions()->UnitCommand(unit_to_build, ability_type_for_structure,
 		GetGoodBuildingLocation(unit_to_build));
+
+	/*
+	*/
 
 	return true;
 }

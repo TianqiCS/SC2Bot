@@ -18,9 +18,10 @@ void Feeder::BuildArmy() {
 	Units starports_tech = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_STARPORTTECHLAB));
 
 	Units supply_depots = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_SUPPLYDEPOT));
+
 	if (bases.size() < 2 && observation->GetMinerals() > 600) {
 		TryBuildExpansionCom();
-		return;
+		// return; after some steps, this if returns unexpectedly
 	}
 
 	for (const auto& supply_depot : supply_depots) {
@@ -35,15 +36,31 @@ void Feeder::BuildArmy() {
 		}
 	}
 
+	//std::cerr << " build army " << std::endl;
+
+	if (barracks.empty())
+	{
+		std::cerr << " no barracks " << std::endl;
+	}
+	else{
+		std::cerr << barracks.size() << std::endl;
+	}
+
 	for (const auto& barrack : barracks) {
+
+		std::cerr << " there are barracks " << std::endl;
+
 		if (!barrack->orders.empty() || barrack->build_progress != 1) {
+			std::cerr << " barracks could not build" << std::endl;
 			continue;
 		}
 
-		// need at least 2 barracks to consider addon
-		if (barracks.size() < 2) { return; }
 
-		if (observation->GetUnit(barrack->add_on_tag) == nullptr) {
+		// need at least 2 barracks to consider addon
+		// if (barracks.size() < 2) { return; }
+		// combined with following if block
+
+		if (observation->GetUnit(barrack->add_on_tag) == nullptr && barracks.size() >= 2) {
 			if (barracks_tech.size() < barracks.size() / 2 || barracks_tech.empty()) {
 				TryBuildAddOn(ABILITY_ID::BUILD_TECHLAB_BARRACKS, barrack->tag);
 			}
@@ -53,6 +70,8 @@ void Feeder::BuildArmy() {
 				//TryBuildAddOn(ABILITY_ID::BUILD_REACTOR_BARRACKS, barrack->tag);
 			}
 		}
+		std::cerr << " going to build " << std::endl;
+
 		TryBuildMarauder();
 		TryBuildMarine();
 
