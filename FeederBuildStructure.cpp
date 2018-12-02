@@ -66,6 +66,9 @@ bool Feeder::TryBuildTrainingFacilities()
 			TryBuildStructure(ABILITY_ID::BUILD_BARRACKS, 2, UNIT_TYPEID::TERRAN_SCV);
 		}
 	}
+	else if (observation->GetMinerals() > 600) {  // why not use the extra money to build our army
+		TryBuildStructure(ABILITY_ID::BUILD_BARRACKS, 2, UNIT_TYPEID::TERRAN_SCV);
+	}
 	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
 		observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size() > 2 &&
 		observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size() < 1) {
@@ -149,15 +152,17 @@ bool Feeder::TryBuildResearch()
 
 	barracks_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size();
 	factory_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size();
+	int base_num = observation->GetUnits(Unit::Alliance::Self, IsTownHall()).size();
 
 	if (barracks_num >= 3 && !CountUnitType(observation, UNIT_TYPEID::TERRAN_ENGINEERINGBAY)) {
 		TryBuildStructure(ABILITY_ID::BUILD_ENGINEERINGBAY, 1, UNIT_TYPEID::TERRAN_SCV);
 	}
-	//	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
-	//		observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size() > 0 &&
-	//		!CountUnitType(observation, UNIT_TYPEID::TERRAN_ARMORY)) {
-	//		TryBuildStructure(ABILITY_ID::BUILD_ARMORY, 1, UNIT_TYPEID::TERRAN_SCV);
-	//	}
+	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
+		observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size() > 0 &&
+		!CountUnitType(observation, UNIT_TYPEID::TERRAN_ARMORY) &&
+		base_num > 1) {
+			TryBuildStructure(ABILITY_ID::BUILD_ARMORY, 1, UNIT_TYPEID::TERRAN_SCV);
+	}
 
 	return true;
 }

@@ -16,6 +16,9 @@ void Feeder::OnGameStart() {
 	std::cout << "start!" << std::endl;
 	move_back_ = false;
 	targeted_enemy_ = 0;
+	expansions_ = search::CalculateExpansionLocations(Observation(), Query());
+	startLocation_ = Observation()->GetStartLocation();
+	staging_location_ = startLocation_;
 
 
 }

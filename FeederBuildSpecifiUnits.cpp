@@ -27,7 +27,7 @@ bool Feeder::TryBuildSCV() {
 		return false;
 	}
 
-	if (observation->GetFoodWorkers() > GetExpectedWorkers(UNIT_TYPEID::TERRAN_REFINERY)) {
+	if (observation->GetFoodWorkers() > GetExpectedWorkers(UNIT_TYPEID::TERRAN_REFINERY) + 1) {
 		return false;
 	}
 
@@ -47,7 +47,7 @@ bool Feeder::TryBuildSCV() {
 }
 
 bool Feeder::TryBuildMarine() {
-	return TryBuildUnit(ABILITY_ID::TRAIN_MARINE, UNIT_TYPEID::TERRAN_BARRACKS);
+	return TryBuildUnitWithReactor(ABILITY_ID::TRAIN_MARINE, UNIT_TYPEID::TERRAN_BARRACKS);
 }
 
 bool Feeder::TryBuildMarauder() {
@@ -55,5 +55,5 @@ bool Feeder::TryBuildMarauder() {
 }
 
 bool Feeder::TrybuildMedivac() {
-	return TryBuildUnit(ABILITY_ID::TRAIN_MEDIVAC, UNIT_TYPEID::TERRAN_STARPORT);
+	return TryBuildUnitWithReactor(ABILITY_ID::TRAIN_MEDIVAC, UNIT_TYPEID::TERRAN_STARPORT);
 }

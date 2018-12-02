@@ -11,13 +11,16 @@ void Feeder::ManageArmy() {
 	const ObservationInterface* observation = Observation();
 
 	Units enemy_units = observation->GetUnits(Unit::Alliance::Enemy);
+	if (!enemy_units.size()) {
+		ScoutWithSCV();
+	}
 
 	Units army = observation->GetUnits(Unit::Alliance::Self, IsArmy(observation));
 
 	if (army.empty()) {
 		return;
 	}
-	int wait_til_supply = 30;
+	int wait_til_supply = 45;
 
 	Units nuke = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_NUKE));
 	for (const auto& unit : army) {

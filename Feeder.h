@@ -134,7 +134,9 @@ public:
 	bool TryBuildResearch();
 	
 
+	
 	// build units
+	bool TryBuildUnitWithReactor(AbilityID ability_type_for_unit, UnitTypeID unit_type);
 	void BuildArmy();
 	bool TryBuildSCV();
 	bool TryBuildMarine();

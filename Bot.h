@@ -84,7 +84,7 @@ public:
 	virtual void OnNuclearLaunchDetected() final;
 
 	uint32_t current_game_loop_ = 0;
-	int max_worker_count_ = 70;
+	int max_worker_count_ = 100;
 
 	//When to start building attacking units
 	int target_worker_count_ = 15;
