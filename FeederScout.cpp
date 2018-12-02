@@ -52,7 +52,7 @@ void Feeder::ScoutWithSCV() {
 		GetAllEnemyBaseLocation(start_loactions);
 
 		// for each possible enemy base location
-		scouter = unit->tag;
+		//scouter = unit->tag;
 		for (Point2D &point : start_loactions) {
 			Actions()->UnitCommand(unit, ABILITY_ID::SMART, point, true); // queue orders
 		}
