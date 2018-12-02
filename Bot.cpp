@@ -269,7 +269,10 @@ void Bot::AttackWithUnit(const Unit* unit, const ObservationInterface* observati
 
 	//If the unit is doing something besides attacking, make it attack.
 	if (unit->orders.front().ability_id != ABILITY_ID::ATTACK) {
-		Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, enemy_units.front()->pos);
+		if (unit->orders.size() < 2)
+		{
+			Actions()->UnitCommand(unit, ABILITY_ID::ATTACK, enemy_units.front()->pos, true);
+		}
 	}
 }
 

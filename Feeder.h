@@ -24,6 +24,25 @@ struct IsFlying {
 	}
 };
 
+struct Medivec {
+	Medivec(const ObservationInterface* obs) : observation_(obs) {}
+
+	bool operator()(const Unit& unit) {
+		auto id = unit.unit_type;
+		
+		if (id == UNIT_TYPEID::TERRAN_MEDIVAC){
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+
+	const ObservationInterface* observation_;
+};
+
+
 //Ignores Overlords, workers, and structures
 struct IsArmy {
 	IsArmy(const ObservationInterface* obs) : observation_(obs) {}
@@ -173,7 +192,8 @@ public:
 	std::set<UNIT_TYPEID> unit_filter;
 
 	Point2D get_back_location;
-	void hitAndRun(const Unit *unit, const ObservationInterface *ob, const float range);
+	void hitAndRun(const Unit *unit, Units medi, const ObservationInterface *ob, const float range);
+	std::set< std::pair<Tag, float> > prev;
 
 	// demo || unsorted
 	void AttackWithAllUnits();

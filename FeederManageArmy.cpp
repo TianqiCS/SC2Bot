@@ -11,6 +11,7 @@ void Feeder::ManageArmy() {
 	const ObservationInterface* observation = Observation();
 
 	Units enemy_units = observation->GetUnits(Unit::Alliance::Enemy);
+	Units medi = observation->GetUnits(Unit::Alliance::Self, Medivec(observation));
 	if (!enemy_units.size()) {
 		ScoutWithSCV();
 	}
@@ -73,7 +74,7 @@ void Feeder::ManageArmy() {
 				//}
 				//else {
 				AttackWithUnit(unit, observation);
-				hitAndRun(unit, observation, 5.0f);
+				hitAndRun(unit, medi, observation, 5.0f);
 				//}
 				
 				break;
@@ -102,7 +103,7 @@ void Feeder::ManageArmy() {
 					}
 				}
 				AttackWithUnit(unit, observation);
-				hitAndRun(unit, observation, 6.0f);
+				hitAndRun(unit, medi, observation, 6.0f);
 				break;
 			}
 
@@ -207,6 +208,15 @@ void Feeder::ManageArmy() {
 				break;
 			}
 		}
+	}
+
+	//std::copy(army.begin(), army.end(), previousObserve.begin());
+	//std::copy();
+	prev.clear();
+	size_t length = army.size();
+	for (size_t i = 0; i < length; i++)
+	{	
+		prev.insert(std::pair<Tag, float> (army[i]->tag, army[i]->health));
 	}
 }
 

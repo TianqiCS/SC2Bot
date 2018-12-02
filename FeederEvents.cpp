@@ -12,6 +12,8 @@ void Feeder::OnGameStart() {
 	// call a method to calculate rally point depending on undestructible rock
 	// 
 	// Actions()->UnitCommand(const Unit* unit, AbilityID ability, const Point2D& point, bool queued_command = false)
+	const ObservationInterface* observation = Observation();	
+	
 	GetRallyPointOnRocks();
 	std::cout << "start!" << std::endl;
 	move_back_ = false;
@@ -19,8 +21,6 @@ void Feeder::OnGameStart() {
 	expansions_ = search::CalculateExpansionLocations(Observation(), Query());
 	startLocation_ = Observation()->GetStartLocation();
 	staging_location_ = startLocation_;
-
-
 }
 // this is comment
 void Feeder::OnStep() {
