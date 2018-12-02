@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 	coordinator.SetParticipants({
 		CreateParticipant(sc2::Race::Terran, &bot),
 		//sc2::PlayerSetup(sc2::PlayerType::Observer,Util::GetRaceFromString(enemyRaceString)),
-		CreateComputer(sc2::Race::Random, Easy)
+		CreateComputer(sc2::Race::Random, HardVeryHard)
 		});
 	// Start the game.
 	coordinator.LaunchStarcraft();

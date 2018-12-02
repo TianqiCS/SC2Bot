@@ -68,6 +68,7 @@ void Feeder::BuildArmy() {
 		TrybuildMedivac();
 	}
 
+	/*
 	for (const auto& factory : factorys) {
 		if (!factory->orders.empty()) {
 			continue;
@@ -93,11 +94,13 @@ void Feeder::BuildArmy() {
 
 		}
 	}
+    */
 
 	for (const auto& starport : starports) {
 		if (!starport->orders.empty()) {
 			continue;
 		}
+		/*
 		if (observation->GetUnit(starport->add_on_tag) == nullptr) {
 			if (false) {
 				if (CountUnitType(observation, UNIT_TYPEID::TERRAN_STARPORTREACTOR) < 2) {
@@ -117,6 +120,7 @@ void Feeder::BuildArmy() {
 
 			}
 		}
+		*/
 	}
 
 	size_t barracks_count_target = std::min<size_t>(3 * bases.size(), 8);
