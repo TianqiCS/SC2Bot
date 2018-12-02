@@ -530,7 +530,11 @@ bool Bot::TryBuildStructure(ABILITY_ID ability_type_for_structure, size_t count 
 		}
 
 		if (unit->unit_type == unit_type) {
-			unit_to_build = unit;
+			if (unit->orders.empty()){
+				unit_to_build = unit;
+			}else if (unit->orders.front().ability_id != ABILITY_ID::MOVE){
+				unit_to_build = unit;
+			}
 		}
 	}
 	float rx = GetRandomScalar();
