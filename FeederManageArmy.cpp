@@ -67,7 +67,15 @@ void Feeder::ManageArmy() {
 					}
 
 				}
+				//if (unit->engaged_target_tag)
+				//{
+					//hitAndRun(unit, observation, 5.0f);
+				//}
+				//else {
 				AttackWithUnit(unit, observation);
+				hitAndRun(unit, observation, 5.0f);
+				//}
+				
 				break;
 			}
 			case UNIT_TYPEID::TERRAN_MARAUDER: {
@@ -94,6 +102,7 @@ void Feeder::ManageArmy() {
 					}
 				}
 				AttackWithUnit(unit, observation);
+				hitAndRun(unit, observation, 6.0f);
 				break;
 			}
 

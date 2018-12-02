@@ -172,7 +172,8 @@ public:
 	std::set<UNIT_TYPEID> unit_type_container;
 	std::set<UNIT_TYPEID> unit_filter;
 
-
+	Point2D get_back_location;
+	void hitAndRun(const Unit *unit, const ObservationInterface *ob, const float range);
 
 	// demo || unsorted
 	void AttackWithAllUnits();

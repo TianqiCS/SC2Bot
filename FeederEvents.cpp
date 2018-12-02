@@ -40,7 +40,6 @@ void Feeder::OnStep() {
 }
 
 void Feeder::OnUnitDestroyed(const sc2::Unit *unit) {
-	resetMicroControl(unit);
 	if (unit->alliance == Unit::Alliance::Enemy) {
 		
 	}
