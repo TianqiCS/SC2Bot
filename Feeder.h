@@ -129,6 +129,7 @@ public:
 	bool TryBuildSupplyDepot();
 	bool TryBuildTrainingFacilities();
 	bool TryBuildExpansionCom();
+	bool TryMoveBase();
 	bool TryBuildAddOn(AbilityID ability_type_for_structure, Tag base_structure);
 	bool BuildRefinery();
 	bool TryBuildResearch();

@@ -20,7 +20,7 @@ void Feeder::ManageArmy() {
 	if (army.empty()) {
 		return;
 	}
-	int wait_til_supply = 45;
+	int wait_til_supply = 40;
 
 	Units nuke = observation->GetUnits(Unit::Self, IsUnit(UNIT_TYPEID::TERRAN_NUKE));
 	for (const auto& unit : army) {

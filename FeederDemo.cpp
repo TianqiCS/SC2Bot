@@ -57,12 +57,13 @@ void Feeder::Observate() {  // not recommended to use
 bool Feeder::TryBuildExpansionCom() {
 	const ObservationInterface* observation = Observation();
 	Units bases = observation->GetUnits(Unit::Alliance::Self, IsTownHall());
+	
 	//Don't have more active bases than we can provide workers for
 	if (GetExpectedWorkers(UNIT_TYPEID::TERRAN_REFINERY) > max_worker_count_) {
 		return false;
 	}
 	// If we have extra workers around, try and build another Hatch.
-	if (GetExpectedWorkers(UNIT_TYPEID::TERRAN_REFINERY) < observation->GetFoodWorkers() - 10) {
+	if (GetExpectedWorkers(UNIT_TYPEID::TERRAN_REFINERY) < observation->GetFoodWorkers() - 5) {
 		return TryExpand(ABILITY_ID::BUILD_COMMANDCENTER, UNIT_TYPEID::TERRAN_SCV);
 	}
 	//Only build another Hatch if we are floating extra minerals
@@ -70,6 +71,46 @@ bool Feeder::TryBuildExpansionCom() {
 		return TryExpand(ABILITY_ID::BUILD_COMMANDCENTER, UNIT_TYPEID::TERRAN_SCV);
 	}
 	return false;
+}
+
+bool Feeder::TryMoveBase() {  // lift the base if mines are completed
+	const ObservationInterface* observation = Observation();
+	Units bases = observation->GetUnits(Unit::Alliance::Self, IsTownHall());
+
+	for (auto &base : bases) {
+		if (base->ideal_harvesters < 7 && base->ideal_harvesters != 0) {
+			Actions()->UnitCommand(base, ABILITY_ID::LIFT);
+		}
+
+		if (base->unit_type == UNIT_TYPEID::TERRAN_ORBITALCOMMANDFLYING) {
+			if (!base->orders.empty()) {
+				continue;
+			}
+			float minimum_distance = std::numeric_limits<float>::max();
+			Point3D closest_expansion;
+			for (const auto& expansion : expansions_) {
+				float current_distance = Distance2D(startLocation_, expansion);
+				if (current_distance < .01f) {
+					continue;
+				}
+
+				if (current_distance < minimum_distance) {
+					if (Query()->Placement(ABILITY_ID::LAND_ORBITALCOMMAND, expansion)) {
+						closest_expansion = expansion;
+						minimum_distance = current_distance;
+					}
+				}
+			}
+			Actions()->UnitCommand(base, ABILITY_ID::LAND_ORBITALCOMMAND, closest_expansion);
+		}
+	}
+
+	
+	//only update staging location up till 3 bases.
+
+
+
+	return true;
 }
 
 // pre-conditon: enemy-location is found

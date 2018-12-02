@@ -52,6 +52,7 @@ void Feeder::BuildArmy() {
 
 	bool overloaded = false;  // our mines are empty
 
+	TryMoveBase();
 	TryBuildExpansionCom();
 
 	for (const auto& supply_depot : supply_depots) {
@@ -130,6 +131,7 @@ void Feeder::BuildArmy() {
 		if (!starport->orders.empty()) {
 			continue;
 		}
+		/*
 		if (observation->GetUnit(starport->add_on_tag) == nullptr) {
 			if (CountUnitType(observation, UNIT_TYPEID::TERRAN_STARPORTREACTOR) < 1) {
 				TryBuildAddOn(ABILITY_ID::BUILD_REACTOR_STARPORT, starport->tag);
@@ -138,8 +140,9 @@ void Feeder::BuildArmy() {
 				TryBuildAddOn(ABILITY_ID::BUILD_TECHLAB_STARPORT, starport->tag);
 			}
 
-			}
 		}
+			*/
+	}
 
 	size_t barracks_count_target = std::min<size_t>(3 * bases.size(), 8);
 	size_t factory_count_target = 1;

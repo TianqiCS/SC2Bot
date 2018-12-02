@@ -566,7 +566,7 @@ bool Bot::TryExpand(AbilityID build_ability, UnitTypeID worker_type) {
 		}
 	}
 	//only update staging location up till 3 bases.
-	if (TryBuildStructure(build_ability, worker_type, closest_expansion, true) && observation->GetUnits(Unit::Self, IsTownHall()).size() < 4) {
+	if (TryBuildStructure(build_ability, worker_type, closest_expansion, true) && observation->GetUnits(Unit::Self, IsTownHall()).size() < 3) {
 		staging_location_ = Point3D(((staging_location_.x + closest_expansion.x) / 2), ((staging_location_.y + closest_expansion.y) / 2),
 			((staging_location_.z + closest_expansion.z) / 2));
 		return true;

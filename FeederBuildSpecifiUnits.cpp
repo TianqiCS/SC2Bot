@@ -12,7 +12,10 @@ bool Feeder::TryBuildSCV() {
 	Units bases = observation->GetUnits(Unit::Alliance::Self, IsTownHall());
 
 	for (const auto& base : bases) {
-		if (base->unit_type == UNIT_TYPEID::TERRAN_ORBITALCOMMAND && base->energy > 50) {
+		if (base->unit_type == UNIT_TYPEID::TERRAN_ORBITALCOMMANDFLYING) {
+			continue;
+		}
+		else if (base->unit_type == UNIT_TYPEID::TERRAN_ORBITALCOMMAND && base->energy > 50) {
 			if (FindNearestMineralPatch(base->pos)) {
 				Actions()->UnitCommand(base, ABILITY_ID::EFFECT_CALLDOWNMULE, FindNearestMineralPatch(base->pos));
 			}

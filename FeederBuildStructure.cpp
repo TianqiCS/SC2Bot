@@ -152,7 +152,7 @@ bool Feeder::TryBuildResearch()
 
 	barracks_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size();
 	factory_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(factory_types)).size();
-	int base_num = observation->GetUnits(Unit::Alliance::Self, IsTownHall()).size();
+	size_t base_num = observation->GetUnits(Unit::Alliance::Self, IsTownHall()).size();
 
 	if (barracks_num >= 3 && !CountUnitType(observation, UNIT_TYPEID::TERRAN_ENGINEERINGBAY)) {
 		TryBuildStructure(ABILITY_ID::BUILD_ENGINEERINGBAY, 1, UNIT_TYPEID::TERRAN_SCV);
