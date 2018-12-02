@@ -36,10 +36,21 @@ void Feeder::hitAndRun(const Unit *unit, const ObservationInterface *ob, const f
 		return;
 	}
 
+	
 	std::cerr << unit->engaged_target_tag << std::endl;
 	enemy = ob->GetUnit(unit->engaged_target_tag);
 
-	enemy_pos = unit->orders.front().target_pos;
+	if (enemy == nullptr)
+	{
+		return;
+	}
+
+	if (!enemy->is_alive) {
+		std::cerr << "dead" << std::endl;
+
+		return;
+	}
+	//enemy_pos = unit->orders.front().target_pos;
 	//return;
 	//all_type_data = ob->GetUnitTypeData(false);
 	
@@ -54,8 +65,12 @@ void Feeder::hitAndRun(const Unit *unit, const ObservationInterface *ob, const f
 	back.y = 2 * unit->pos.y - enemy->pos.y;
 
 
-	std::cerr << "moveback h%r" << std::endl;
 
-	Actions()->UnitCommand(unit, ABILITY_ID::MOVE, back);
+	if (unit->is_alive)
+	{
+		std::cerr << "moveback h%r" << std::endl;
+		Actions()->UnitCommand(unit, ABILITY_ID::MOVE, back);
+	}
+
 	
 }
