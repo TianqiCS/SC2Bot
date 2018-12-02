@@ -27,8 +27,8 @@ void Feeder::hitAndRun(const Unit *unit, Units medi, const ObservationInterface 
 
 	if (!army_test(*enemy)) { return; }
 
-	back.x = 1.5f * unit->pos.x - enemy->pos.x;
-	back.y = 1.5f * unit->pos.y - enemy->pos.y;
+	back.x = unit->pos.x - enemy->pos.x + unit->pos.x;
+	back.y = unit->pos.y - enemy->pos.y + unit->pos.y;
 
 	health_ratio = (unit->health / unit->health_max);
 	if (health_ratio >= 0.7f)
