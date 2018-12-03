@@ -223,6 +223,7 @@ private:
 	size_t scv_num;
 	size_t depot_num;
 	size_t barracks_num;
+	size_t starport_num;
 	size_t factory_num;
 	size_t refinery_num;
 	size_t marine_num;

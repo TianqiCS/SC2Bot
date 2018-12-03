@@ -1,17 +1,2 @@
-﻿  Bot.cpp
-  FeederBuildArmy.cpp
-  FeederBuildSpecifiUnits.cpp
-  FeederBuildStructure.cpp
-  FeederDemo.cpp
-  FeederEvents.cpp
-  FeederManageArmy.cpp
-  FeederManageUpgrade.cpp
-  FeederMicroControl.cpp
-  FeederScout.cpp
-  Logger.cpp
-  Run.cpp
-  Utility.cpp
-  Generating Code...
-  LINK : D:\SC2_AI\SC2Bot\x64\Debug\Feeder.exe not found or not built by the last incremental link; performing full link
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+﻿  FeederBuildStructure.cpp
   CryptBot.vcxproj -> D:\SC2_AI\SC2Bot\x64\Debug\Feeder.exe

@@ -19,6 +19,7 @@ void Feeder::BuildStructures() {
 bool Feeder::TryBuildSupplyDepot() {
 	const ObservationInterface* observation = Observation();
 	barracks_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(barrack_types)).size();
+	starport_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(starport_types)).size();
 
 	// If we do not have enough minerals
 	if (observation->GetMinerals() < 100) {
@@ -26,18 +27,22 @@ bool Feeder::TryBuildSupplyDepot() {
 	}
 
 	// If we are not supply capped, don't build a supply depot.
-	if (observation->GetFoodUsed() < observation->GetFoodCap() - (3 + barracks_num * 2)) {
+	if (observation->GetFoodUsed() < observation->GetFoodCap() - (3 + barracks_num * 2 + starport_num * 0)) {
 		return false;
 	}
-
-
 
 	//check to see if there is already on building
 	Units units = observation->GetUnits(Unit::Alliance::Self, IsUnits(supply_depot_types));
 	if (observation->GetFoodUsed() < 50) {
 		for (const auto& unit : units) {
 			if (unit->build_progress != 1) {
-				return false;
+				if (observation->GetFoodUsed() < observation->GetFoodCap()-1) {
+					return false;
+				}
+				else {
+					return false;
+					TryBuildStructure(ABILITY_ID::BUILD_SUPPLYDEPOT, 2, UNIT_TYPEID::TERRAN_SCV);
+				}
 			}
 		}
 	}
