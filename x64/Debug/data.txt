@@ -118,3 +118,1190 @@ Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 764
 Waiting for connection
 Connected to 127.0.0.1:8167
 Waiting for the JoinGame response.
+416: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 15800
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we win
+3360: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 8816
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+448: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 1132
+
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we win
+704: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 6904
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we win
+16: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 10268
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we win
+4000: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 11220
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+3536: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 15180
+
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we win
+208: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 1616
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we win
+240: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 9096
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+704: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 1600
+
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+3216: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 11160
+
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we lost
+2928: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 18328
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+176: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 14756
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we lost
+3088: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 16044
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+752: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 10760
+
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we win
+3120: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 16380
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+832: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 4224
+
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we lost
+3424: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 2548
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+3808: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 16480
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+Game Ended for: 8167
+we win
+2992: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 14292
+Waiting for connection
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.
+WaitJoinGame finished successfully.
+start!
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+64: Feeder has been initialized..
+Launched SC2 (D:\steam\StarCraft II\Versions\Base70154\SC2_x64.exe), PID: 18208
+
+Connected to 127.0.0.1:8167
+Waiting for the JoinGame response.

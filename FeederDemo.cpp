@@ -67,6 +67,7 @@ bool Feeder::TryBuildExpansionCom() {
 		return TryExpand(ABILITY_ID::BUILD_COMMANDCENTER, UNIT_TYPEID::TERRAN_SCV);
 	}
 	//Only build another Hatch if we are floating extra minerals
+	//if (observation->GetMinerals() > std::min<size_t>(bases.size() * 400, 1200)) {
 	if (observation->GetMinerals() > std::min<size_t>(bases.size() * 400, 1200)) {
 		return TryExpand(ABILITY_ID::BUILD_COMMANDCENTER, UNIT_TYPEID::TERRAN_SCV);
 	}
