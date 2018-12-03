@@ -62,11 +62,11 @@ bool Feeder::TryBuildTrainingFacilities()
 
 	if (barracks_num < 4) {
 		TryBuildStructure(ABILITY_ID::BUILD_BARRACKS, 1, UNIT_TYPEID::TERRAN_SCV);
-		if (observation->GetMinerals() > 250 && barracks_num < 4) {
+		if (observation->GetMinerals() > 200 && barracks_num < 4) {
 			TryBuildStructure(ABILITY_ID::BUILD_BARRACKS, 2, UNIT_TYPEID::TERRAN_SCV);
 		}
 	}
-	else if (observation->GetMinerals() > 600) {  // why not use the extra money to build our army
+	else if (observation->GetMinerals() > 500) {  // why not use the extra money to build our army
 		TryBuildStructure(ABILITY_ID::BUILD_BARRACKS, 2, UNIT_TYPEID::TERRAN_SCV);
 	}
 	else if (CountUnitType(observation, UNIT_TYPEID::TERRAN_REFINERY) > 0 &&
