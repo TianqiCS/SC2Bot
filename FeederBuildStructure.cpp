@@ -27,7 +27,7 @@ bool Feeder::TryBuildSupplyDepot() {
 	}
 
 	// If we are not supply capped, don't build a supply depot.
-	if (observation->GetFoodUsed() < observation->GetFoodCap() - (3 + barracks_num * 2 + starport_num * 0)) {
+	if (observation->GetFoodUsed() < observation->GetFoodCap() - (3 + barracks_num * 2 + starport_num * 1)) {
 		return false;
 	}
 
