@@ -7,6 +7,7 @@
 #include "Logger.h"
 #include "Bot.h"
 
+
 struct IsAttackable {
 	bool operator()(const Unit& unit) {
 		switch (unit.unit_type.ToType()) {
