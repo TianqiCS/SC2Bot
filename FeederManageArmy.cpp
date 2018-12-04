@@ -62,20 +62,13 @@ void Feeder::ManageArmy() {
 						}
 						if (distance < 6 && !has_stimmed) { // old value 6
 							Actions()->UnitCommand(unit, ABILITY_ID::EFFECT_STIM_MARINE);
-							//PrintStatus("use stimpack");
 							break;
 						}
 					}
 
 				}
-				//if (unit->engaged_target_tag)
-				//{
-					//hitAndRun(unit, observation, 5.0f);
-				//}
-				//else {
 				AttackWithUnit(unit, observation);
 				hitAndRun(unit, medi, observation, 5.0f);
-				//}
 				
 				break;
 			}
@@ -199,12 +192,13 @@ void Feeder::ManageArmy() {
 			case UNIT_TYPEID::TERRAN_MEDIVAC: {
 				Units bio_units = observation->GetUnits(Unit::Self, IsUnits(bio_types));
 				if (unit->orders.empty()) {
-					Actions()->UnitCommand(unit, ABILITY_ID::SMART, bio_units.front()->pos);
+					if (!bio_units.empty()) {
+						Actions()->UnitCommand(unit, ABILITY_ID::SMART, bio_units.front()->pos);
+					}
 				}
 				break;
 			}
 			default:
-				//ScoutWithUnit(unit, observation);
 				break;
 			}
 		}

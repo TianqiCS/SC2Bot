@@ -52,7 +52,6 @@ void Feeder::hitAndRun(const Unit *unit, Units medi, const ObservationInterface 
 					//std::cout << unit->health << " | " << (*it).second << std::endl;
 				}
 				if (unit->health < (*it).second) {
-					std::cout << "back" << std::endl;
 					// TODO find closest medivec later, instead of front()
 					Actions()->UnitCommand(medi.front(), ABILITY_ID::LOAD, unit);
 					Actions()->UnitCommand(medi.front(), ABILITY_ID::UNLOADALLAT, back, true);
@@ -78,7 +77,6 @@ void Feeder::hitAndRun(const Unit *unit, Units medi, const ObservationInterface 
 					//std::cout << unit->health << " | " << (*it).second << std::endl;
 				}
 				if (unit->health < (*it).second) {
-					std::cout << "back" << std::endl;
 					// TODO find closest medivec later, instead of front()
 					Actions()->UnitCommand(unit, ABILITY_ID::MOVE, back);
 					AttackWithUnit(unit, ob);

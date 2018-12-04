@@ -2,6 +2,7 @@
 
 using namespace sc2;
 
+// return true for all attackabke units
 struct IsAttackable {
 	bool operator()(const Unit& unit) {
 		switch (unit.unit_type.ToType()) {
@@ -91,6 +92,7 @@ struct IsStructure {
 	const ObservationInterface* observation_;
 };
 
+// return the count for any type of unit
 int CountUnitType(const ObservationInterface* observation, UnitTypeID unit_type) {
 	int count = 0;
 	Units my_units = observation->GetUnits(Unit::Alliance::Self);
