@@ -9,11 +9,24 @@ using namespace sc2;
 
 
 void Feeder::BuildStructures() {
+	const ObservationInterface* observation = Observation();
+	size_t scv_num;
+	std::vector<UNIT_TYPEID> scv_types = { UNIT_TYPEID::TERRAN_SCV };
+
+	ManageUpgrades();
+
+	scv_num = observation->GetUnits(Unit::Alliance::Self, IsUnits(scv_types)).size();
+
+	if (scv_num == 0)
+	{
+		return;
+	}
+
 	TryBuildSupplyDepot();
 	TryBuildTrainingFacilities();
 	BuildRefinery();
 	TryBuildResearch();
-	ManageUpgrades();
+	
 }
 
 bool Feeder::TryBuildSupplyDepot() {
