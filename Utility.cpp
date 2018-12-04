@@ -43,7 +43,7 @@ Point2D Feeder::GetGoodBuildingLocation() {
 	);
 
 	if (command_centers.empty()) {
-		std::cerr << "fail to find command center" << std::endl;
+		//std::cerr << "fail to find command center" << std::endl;
 		rx = GetRandomScalar();
 		ry = GetRandomScalar();
 		build_location = Point2D(staging_location_.x + rx * 15, staging_location_.y + ry * 15);
@@ -187,7 +187,7 @@ void Feeder::GetRallyPointOnRocks() {
 	);
 
 	if (rocks.empty()) {
-		std::cerr << "Error finding rocks" << std::endl;
+		//std::cerr << "Error finding rocks" << std::endl;
 		return;
 	}
 
