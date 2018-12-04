@@ -420,7 +420,7 @@ Point2D Bot::GetGoodBuildingLocation(const Unit *unit_to_build) {
 
 	// if not found command center
 	if (command_centers.empty()) {
-		std::cerr << "fail to find command center" << std::endl;
+		//std::cerr << "fail to find command center" << std::endl;
 		rx = GetRandomScalar();
 		ry = GetRandomScalar();
 		build_location = Point2D(unit_to_build->pos.x + rx * 15.0f, unit_to_build->pos.y + ry * 15.0f);
