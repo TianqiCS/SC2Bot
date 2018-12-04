@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 	coordinator.SetMultithreaded(true);
 	coordinator.SetParticipants({
 		CreateParticipant(sc2::Race::Terran, &bot),
-		CreateComputer(sc2::Race::Random, CheatVision)
+		CreateComputer(sc2::Race::Random, CheatInsane)
 		});
 	// Start the game.
 	coordinator.LaunchStarcraft();
