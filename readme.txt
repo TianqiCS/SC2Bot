@@ -1,5 +1,12 @@
 Installation of Feeder:
 1. unzip project.zip
+	1.1. The Feeder folder should be in the same directory with SC2APi which assumes you already have it.
+	\some folder
+		\SC2APi
+			\some files
+		\Feeder
+			\some files
+		\another folder
 2. make sure you have map "CactusValleyLE.SC2Map" in your game directory .../StarCraftII/Maps/CactusValleyLE.SC2MAP (create Maps directory if there is no Maps)
 3. you can open the project by opening Feeder.sln with visual studio
 4. if you need to replace / modify the codes to run the game. It's in run.cpp.
