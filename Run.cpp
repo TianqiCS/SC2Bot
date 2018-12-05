@@ -9,48 +9,18 @@
 
 #ifdef DEBUG
 
-/*int main(int argc, char* argv[])
-{
-	/*
-	Feeder bot;
-	sc2::Coordinator coordinator;
-	if (!coordinator.LoadSettings(argc, argv))
-	{
-		std::cout << "Unable to find or parse settings." << std::endl;
-		return 1;
-	}
-	coordinator.SetWindowSize(1920, 1080);
-	coordinator.SetStepSize(100); // speed
-	coordinator.SetRealtime(false);
-	coordinator.SetMultithreaded(true);
-	coordinator.SetParticipants({
-		CreateParticipant(sc2::Race::Terran, &bot),
-		//sc2::PlayerSetup(sc2::PlayerType::Observer,Util::GetRaceFromString(enemyRaceString)),
-		CreateComputer(sc2::Race::Random, VeryHard)
-	});
-	// Start the game.
-	coordinator.LaunchStarcraft();
-	coordinator.StartGame("/CactusValleyLE.SC2Map");
-	//coordinator.StartGame("Interloper LE");
-
-
-	// Step forward the game simulation.
-	while (coordinator.Update())
-	{
-	}
-	
-	RunBot(argc, argv, new Feeder(), sc2::Race::Terran);
-	return 0;
-}
-*/
-// This main function is for quick local demo only
-// please DO NOT EDIT/DELETE
-
-
+/**
+ * Sample testing script
+ *
+ * All test codes should be in following main function
+ *
+ * set map path = coordinator.StartGame("/CactusValleyLE.SC2Map");
+ * Feeder bot; is bot Feeder to be tested
+ */
 
 int main(int argc, char* argv[])
 {
-	Feeder bot;
+	Feeder bot; // bot here
 	sc2::Coordinator coordinator;
 	if (!coordinator.LoadSettings(argc, argv))
 	{
@@ -58,17 +28,16 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 	coordinator.SetWindowSize(1080, 720);
-	//coordinator.SetStepSize(100); // speed
-	coordinator.SetStepSize(100); // speed
+	coordinator.SetStepSize(100); 
 	coordinator.SetRealtime(false);
 	coordinator.SetMultithreaded(true);
 	coordinator.SetParticipants({
-		CreateParticipant(sc2::Race::Terran, &bot),
-		CreateComputer(sc2::Race::Random, CheatInsane)
+		CreateParticipant(sc2::Race::Terran, &bot), // create Feeder in game here
+		CreateComputer(sc2::Race::Terran, CheatInsane)
 		});
 	// Start the game.
 	coordinator.LaunchStarcraft();
-	coordinator.StartGame("/CactusValleyLE.SC2Map");
+	coordinator.StartGame("/CactusValleyLE.SC2Map"); // map path here
 
 
 	// Step forward the game simulation.
@@ -79,7 +48,7 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-
+// following #else should not be used, please, it might CRASH!!
 #else
 
 int main(int argc, char* argv[])
