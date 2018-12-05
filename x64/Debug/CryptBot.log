@@ -1,2 +1,16 @@
-﻿  Run.cpp
-  CryptBot.vcxproj -> D:\SC2_AI\SC2Bot\x64\Debug\Feeder.exe
+﻿  Bot.cpp
+  FeederBuildArmy.cpp
+  FeederBuildSpecifiUnits.cpp
+  FeederBuildStructure.cpp
+  FeederDemo.cpp
+  FeederEvents.cpp
+  FeederManageArmy.cpp
+  FeederManageUpgrade.cpp
+  FeederMicroControl.cpp
+  FeederScout.cpp
+  Logger.cpp
+  Run.cpp
+  Utility.cpp
+  Generating Code...
+  LINK : E:\CMPUT350\SC2Bot\x64\Debug\Feeder.exe not found or not built by the last incremental link; performing full link
+  CryptBot.vcxproj -> E:\CMPUT350\SC2Bot\x64\Debug\Feeder.exe
