@@ -10,7 +10,6 @@
 #include "sc2lib/sc2_lib.h"
 #include <iostream>
 
-
 using namespace sc2;
 
 class Bot : public Agent {

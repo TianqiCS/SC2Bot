@@ -5,6 +5,11 @@ VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Feeder", "CryptBot.vcxproj", "{ACB84C42-74FB-418C-BC59-6EED4AEB2AC2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8B3A8101-6D67-40EB-8D2F-87469FDE2BBC}"
+	ProjectSection(SolutionItems) = preProject
+		project_demo.zip = project_demo.zip
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
