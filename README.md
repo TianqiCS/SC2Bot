@@ -8,3 +8,5 @@ SC2API - https://github.com/Blizzard/s2client-api by Blizzard
 
 Basis - https://github.com/Archiatrus/CryptBot/tree/blank-bot from http://wiki.sc2ai.net/
 
+WOW IT'S PUBLIC!
+
